@@ -1,0 +1,44 @@
+<td>
+
+{#{% set options = column.options %}
+
+{% if admin.isTranslationField(column.name) and admin.appLocales|length < 3 %}
+    {% for i, value in column.translationValues %}
+        <span class="label">{{ i|upper }}</span>
+        <a href="{{ admin.genUrl('edit', {'id': object.id}) }}">
+        {% if options.truncate %}
+            {{ value|truncate(options.truncate_length, options.truncate_preserve, options.truncate_separator) }}
+        {% else %}
+            {{ value }}
+        {% endif %}
+        </a>
+        <br>
+    {% endfor %}
+{% else %}
+    <a href="{{ admin.genUrl('edit', {'id': object.id}) }}">
+    {% if options.truncate %}
+        {{ column.value|truncate(options.truncate_length, options.truncate_preserve, options.truncate_separator) }}
+    {% else %}
+        {{ column.value }}
+    {% endif %}
+    </a>
+{% endif %}#}
+{% set options = column.options %}
+
+{% if options.route %}<a target="_blank" href="{{ path(options.route, column.routeParameters) }}">{% endif %}
+{% if options.truncate %}
+    {% if options.url_as_label %}
+        {{ path(options.route, column.routeParameters)|truncate(options.truncate_length, options.truncate_preserve, options.truncate_separator)|striptags }}
+    {% else %}
+        {{ column.value|truncate(options.truncate_length, options.truncate_preserve, options.truncate_separator)|striptags }}
+    {% endif %}
+{% else %}
+    {% if options.url_as_label %}
+        {{ path(options.route, column.routeParameters) }}
+    {% else %}
+        {{ column.value|raw }}
+    {% endif %}
+{% endif %}
+{% if options.route %}</a>{% endif %}
+
+</td>

@@ -1,0 +1,28 @@
+<div class="table-responsive">
+    <table id="grid" class="{% if admin.hasTrait('Sortable') %}table-sortable {% endif %}table table-bordered table-striped">
+        {# Head #}
+        <thead>
+            <tr>
+                {% for column in grid.columns %}
+                    <th>{{ column.get('label')|capitalize|trans }}</th>
+            {% endfor %}
+                <th></th>
+                {% if app.user.isSuperAdmin %}<th>#</th>{% endif %}
+            </tr>
+        </thead>
+        {# Body #}
+        <tbody>
+        {% for row in grid.rows %}
+            <tr id="tr{{ row.id }}" data-row="{{ loop.index }}">
+                {% for column in grid.columns %}
+                    {% include 'MsiAdminBundle:Column:'~column.type~'.html.twig' with {'i': loop.index, 'column': column.resolveRow(row, working_locale)} %}
+                {% endfor %}
+                <td class="col-xs-1">
+                    <div style="white-space:nowrap;">{% include admin.options.grid_action_template %}</div>
+                </td>
+                {% if app.user.isSuperAdmin %}<td class="col-xs-1">{{ row.id }}</td>{% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

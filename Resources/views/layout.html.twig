@@ -1,0 +1,239 @@
+{% extends 'MsiAdminBundle:Page:layout.html.twig' %}
+
+{% block css %}
+<link href="{{ asset('bundles/msiadmin/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('bundles/msiadmin/vendor/font-awesome-4.0.3/css/font-awesome.css') }}" rel="stylesheet">
+<style type="text/css">
+html {
+    overflow-y: scroll;
+}
+
+.fa-lg {
+    vertical-align: middle;
+}
+
+.table thead>tr>th,
+.table tbody>tr>th,
+.table tfoot>tr>th,
+.table thead>tr>td,
+.table tbody>tr>td,
+.table tfoot>tr>td {
+    vertical-align: middle;
+}
+
+.column-boolean {
+    text-align: center;
+    padding: 0 !important;
+}
+
+.column-boolean a {
+    text-align: center;
+    color: inherit;
+    display: block;
+    padding: 8px;
+}
+
+.column-boolean a .fa-lg {
+    font-size: 2em;
+}
+
+.input-group * {
+    border-radius: 0;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+#sortable1 > li {
+    cursor: move;
+    padding-top: 0;
+    padding-bottom: 1px;
+}
+</style>
+<link rel="stylesheet" href="{{ asset('bundles/msiadmin/vendor/chosen/chosen.css') }}">
+<link rel="stylesheet" href="{{ asset('bundles/msiadmin/vendor/eternicode-bootstrap-datepicker/css/datepicker.css') }}">
+{#<link rel="stylesheet" href="{{ asset('bundles/msiadmin/css/base.css') }}">
+<link rel="stylesheet" href="{{ asset('bundles/msiadmin/css/admin.css') }}">#}
+<link rel="stylesheet" href="{{ asset('bundles/msiadmin/css/dashboard.css') }}">
+{{ parent() }}
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+{% endblock %}
+
+{% block js %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+<script src="{{ asset('bundles/msiadmin/vendor/hinclude/hinclude.js') }}"></script>
+<script src="{{ asset('bundles/msiadmin/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('bundles/msiadmin/vendor/chosen/chosen.jquery.min.js') }}"></script>
+<script src="{{ asset('bundles/msiadmin/vendor/eternicode-bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('bundles/msiadmin/vendor/eternicode-bootstrap-datepicker/js/locales/bootstrap-datepicker.fr.js') }}"></script>
+
+<script src="{{ asset('bundles/msiadmin/js/admin.js') }}"></script>
+<script>
+$("select.chosen").chosen({placeholder_text_single: ' ', placeholder_text_multiple: ''});
+$('.datepicker').datepicker({
+    format: 'dd-mm-yyyy',
+    autoclose: true,
+    language: '{{ app.request.locale }}'
+});
+</script>
+{{ parent() }}
+<script>
+(function($) {
+    "use strict";
+    $('.confirmable').on('click', function() {
+        if (!window.confirm("{{ 'confirmable'|trans }}")) {
+            return false;
+        }
+    });
+})(jQuery);
+</script>
+{% endblock %}
+
+{% block body %}
+{#<div class="navbar navbar-static-top navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ path('msi_admin_dashboard') }}">{{ block('brand') }}</a>
+        </div>
+        <p class="navbar-text navbar-right">{{ app.user.username }} | <a href="{{ path('fos_user_security_logout') }}">{{ 'sign_out'|trans }}</a></p>
+        {{ knp_menu_render('MsiAdminBundle:MenuBuilder:adminMenu', {'allow_safe_labels': true, 'depth': 3, 'currentClass': 'active'}) }}
+    </div>
+</div>
+
+<div class="container">
+    {% block breadcrumb %}
+        {% if admin is defined %}
+            {% include 'MsiAdminBundle::breadcrumb.html.twig' with {'breadcrumb': admin.breadcrumb} %}
+        {% endif %}
+    {% endblock breadcrumb %}
+
+    <h2>{{ block('title')|raw }}{{ block('title_suffix') }}</h2>
+
+    <div class="row">
+        {% set sidebar = block('sidebar') %}
+        {% if sidebar %}
+        <div class="col-md-3">
+            <div id="sidebar">
+            {{ msi_block_render('admin_sidebar_top', page) }}
+            {{ sidebar|raw }}
+            {{ msi_block_render('admin_sidebar_bottom', page) }}
+            <div class="clearfix"></div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="col-md-{% if sidebar %}9{% else %}12{% endif %}">
+            <div id="content">
+            {% if app.session.started %}
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    <div class="alert alert-success fade in">
+                        <i class="icon-large icon-ok-sign"></i> <span>{{ flashMessage }}</span>
+                    </div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                    <div class="alert alert-danger fade in">
+                        <i class="icon-large icon-exclamation-sign"></i> <span>{{ flashMessage }}</span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% set actions = block('actions') %}
+            {% if actions %}
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'MsiAdminBundle::working_locale_btn.html.twig' %}
+                    <div class="btn-toolbar">
+                        {{ actions|raw }}
+                    </div>
+                </div>
+            </div>
+            <hr>
+            {% endif %}
+
+            {{ msi_block_render('content_top', page) }}
+            {{ block('page_content') }}
+            {{ msi_block_render('content_bottom', page) }}
+            <div class="clearfix"></div>
+        </div>
+        </div>
+    </div>
+</div>#}
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">{{ block('brand') }}</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            {{ knp_menu_render('MsiAdminBundle:MenuBuilder:adminMenu', {'allow_safe_labels': true, 'depth': 3, 'currentClass': 'active'}) }}
+            {#<form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="Search...">
+            </form>#}
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.user }} <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{ path('fos_user_profile_edit') }}">Profile</a></li>
+                        <li><a href="{{ path('fos_user_change_password') }}">Password</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}">{{ 'sign_out'|trans }}</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            {#<ul class="nav nav-sidebar">
+                <li class="active"><a href="#">Overviewf</a></li>
+                <li><a href="#">Reports</a></li>
+                <li><a href="#">Analytics</a></li>
+                <li><a href="#">Export</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="">Nav item</a></li>
+                <li><a href="">Nav item again</a></li>
+                <li><a href="">One more nav</a></li>
+                <li><a href="">Another nav item</a></li>
+                <li><a href="">More navigation</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="">Nav item again</a></li>
+                <li><a href="">One more nav</a></li>
+                <li><a href="">Another nav item</a></li>
+            </ul>#}
+            {{ block('sidebar') }}
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            {% block breadcrumb %}
+                {% if admin is defined %}
+                    {% include 'MsiAdminBundle::breadcrumb.html.twig' with {'breadcrumb': admin.breadcrumb} %}
+                {% endif %}
+            {% endblock breadcrumb %}
+            <h1 class="page-header">{{ block('title') }}</h1>
+            {{ block('actions') }}
+            <hr>
+            {{ block('page_content') }}
+        </div>
+    </div>
+</div>
+{% endblock %}

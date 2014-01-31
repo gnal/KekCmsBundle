@@ -1,0 +1,19 @@
+msi_admin_dashboard:
+    pattern: /admin/
+    defaults: { _controller: MsiAdminBundle:Dashboard:dashboard }
+
+msi_admin_limit:
+    pattern: /change-limit
+    defaults: { _controller: MsiAdminBundle:Default:limit }
+
+msi_admin_working_locale:
+    pattern: /change-working-locale
+    defaults: { _controller: MsiAdminBundle:Default:workingLocale }
+
+tinymce_login:
+    pattern: /_tinymce/login
+    defaults: { _controller: MsiAdminBundle:Default:tinymcelogin }
+
+msi_admin_search_index:
+    pattern: /admin/search.html
+    defaults: { _controller: MsiAdminBundle:Search:index }

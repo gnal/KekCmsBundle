@@ -1,0 +1,4 @@
+MsiAdminBundle
+==============
+
+ok

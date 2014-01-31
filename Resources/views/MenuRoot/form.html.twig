@@ -1,0 +1,16 @@
+{% form_theme form 'MsiAdminBundle:Form:form.html.twig' %}
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="tab1">
+        {% for translation in form.translations %}
+            {{ form_row(translation.published) }}
+            {{ form_row(translation.name) }}
+        {% endfor %}
+    </div>
+
+    {% if app.user.isSuperAdmin %}
+    <div class="tab-pane fade" id="tab3">
+        {{ form_row(form.operators) }}
+    </div>
+    {% endif %}
+</div>
+{{ form_rest(form) }}

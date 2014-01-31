@@ -1,0 +1,28 @@
+{% extends 'MsiAdminBundle::layout.html.twig' %}
+
+{% block title %}{{ 'add'|trans|capitalize }} {{ admin.label }}{% endblock title %}
+
+{% block actions %}
+<button class="btn btn-primary msi_admin_save"><span class="icon-edit-sign icon-large"></span> {{ 'save'|trans }}</button>
+<button class="btn btn-default msi_admin_save_quit"><span class="icon-check-sign icon-large"></span> {{ 'save_quit'|trans }}</button>
+<button class="btn btn-success msi_admin_save_add"><span class="icon-plus-sign-alt icon-large"></span> {{ 'save_add'|trans }}</button>
+{% endblock actions %}
+
+{% block content %}
+{% if admin.getOption('sidebar_template') %}{% include admin.getOption('sidebar_template') %}{% endif %}
+<br>
+<form novalidate class="robojax-form" action="{{ admin.genUrl('new') }}" method="POST" {{ form_enctype(form) }}>
+    {% include admin.getOption('form_template') %}
+</form>
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+{% include admin.container.getParameter('msi_admin.tiny_mce') %}
+<script src="{{ asset('bundles/msiadmin/js/save.js') }}"></script>
+{% if admin.getOption('form_js_template') %}{% include admin.getOption('form_js_template') %}{% endif %}
+{% endblock js %}
+
+{% block sidebar %}
+{% if admin.getOption('sidebar_template') %}{% include admin.getOption('sidebar_template') %}{% endif %}
+{% endblock %}

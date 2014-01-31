@@ -1,0 +1,19 @@
+{% if pager.countPages > 1 %}
+{% set page = app.request.query.get('page', 1) %}
+<form method=GET action="{{ path(app.request.attributes.get('_route', app.request.query.all)) }}">
+    <div class="row">
+        <div class="col-md-7 col-md-offset-5">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <a class="btn-default btn{% if page == 1 %} disabled{% endif %}" href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'page': page != 1 ? page - 1 : 1})) }}"><i class="fa fa-chevron-left fa-lg"></i></a>
+                </div>
+                <input class="text-center form-control" name=page value="{{ page ?: 1 }}" type=text>
+                <span class="input-group-addon">/ {{ pager.countPages|number_format }}</span>
+                <div class="input-group-btn">
+                    <a class="pull-right btn-default btn{% if page == pager.countPages %} disabled{% endif %}" href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'page': page != pager.countPages ? page + 1 : pager.countPages})) }}"><i class="fa fa-chevron-right fa-lg"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endif %}

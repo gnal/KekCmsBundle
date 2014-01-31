@@ -1,5 +1,5 @@
 {
-    "name": "msi/admin-bundle",
+    "name": "msi/cms-bundle",
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
@@ -9,7 +9,7 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Msi\\AdminBundle": "" }
+        "psr-0": { "Msi\\CmsBundle": "" }
     },
-    "target-dir": "Msi/AdminBundle"
+    "target-dir": "Msi/CmsBundle"
 }

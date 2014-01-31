@@ -1,129 +1,31 @@
 parameters:
-    msi_admin.manager.class: Msi\AdminBundle\Doctrine\Manager
+#    msi_cms.example.class: Msi\CmsBundle\Example
 
 services:
-    msi_admin.admin:
-        class: Msi\AdminBundle\Admin\Admin
-        abstract: true
-        calls:
-            - [ setContainer, [ @service_container ] ]
-
-    msi_admin.manager:
-        class: %msi_admin.manager.class%
-        abstract: true
-        calls:
-            - [ setEntityManager, [ @doctrine.orm.default_entity_manager ] ]
-            - [ setClassAnalyzer, [ @msi_admin.class_analyzer ] ]
-
-    msi_admin.provider:
-        class: Msi\AdminBundle\Provider\Provider
-        scope: request
-        arguments: [ @request, @msi_cms.site_manager, @service_container ]
-
-    msi_admin.bouncer:
-        class: Msi\AdminBundle\Bouncer\Bouncer
-        arguments: [ @security.context ]
-
-    msi_admin.admin_loader:
-        class: Msi\AdminBundle\Routing\AdminLoader
+    msi_cms.page_listener:
+        class: Msi\CmsBundle\EventListener\PageListener
         arguments: [ @service_container ]
         tags:
-            - { name: routing.loader }
+            - { name: doctrine.event_subscriber }
 
-    msi_admin.admin.form.handler:
-        class: Msi\AdminBundle\Form\Handler\AdminFormHandler
-        scope: request
-        arguments: [ @request, @event_dispatcher ]
+    msi_cms.block_listener:
+        class: Msi\CmsBundle\EventListener\BlockListener
+        arguments: [ @service_container ]
+        tags:
+            - { name: doctrine.event_subscriber }
 
-    msi_admin.filter.form.handler:
-        class: Msi\AdminBundle\Form\Handler\FilterFormHandler
-        scope: request
-        arguments: [ @request ]
+    msi_cms.menu_listener:
+        class: Msi\CmsBundle\EventListener\MenuListener
+        arguments: [ @service_container ]
+        tags:
+            - { name: doctrine.event_subscriber }
 
-    msi_admin.admin.twig.extension:
-        class: Msi\AdminBundle\Twig\Extension\AdminExtension
+    msi_cms.twig.extension.cms:
+        class: Msi\CmsBundle\Twig\Extension\CmsExtension
         arguments: [ @service_container ]
         tags:
             - { name: twig.extension }
 
-    msi_admin.pager.factory:
-        class: Msi\AdminBundle\Pager\PagerFactory
-
-    msi_admin.request_listener:
-        class: Msi\AdminBundle\EventListener\RequestListener
-        scope: request
-        arguments: [ @msi_admin.provider, @security.context ]
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-
-    msi_admin.sortable_listener:
-        class: Msi\AdminBundle\Doctrine\Extension\EventListener\SortableListener
-        tags:
-            - { name: doctrine.event_subscriber }
-
-    msi_admin.soft_deletable_listener:
-        class: Msi\AdminBundle\Doctrine\Extension\EventListener\SoftDeletableListener
-        tags:
-            - { name: doctrine.event_subscriber }
-
-    msi_admin.timestampable_listener:
-        class: Msi\AdminBundle\Doctrine\Extension\EventListener\TimestampableListener
-        tags:
-            - { name: doctrine.event_subscriber }
-
-    msi_admin.translatable_listener:
-        class: Msi\AdminBundle\Doctrine\Extension\EventListener\TranslatableListener
-        arguments: [ @service_container ]
-        tags:
-            - { name: doctrine.event_subscriber }
-
-    msi_admin.blameable_listener:
-        class: Msi\AdminBundle\Doctrine\Extension\EventListener\BlameableListener
-        arguments: [ @service_container ]
-        tags:
-            - { name: doctrine.event_subscriber }
-
-    msi_admin.uploadable_listener:
-        class: Msi\AdminBundle\Doctrine\Extension\EventListener\UploadableListener
-        arguments: [ @msi_admin.uploader ]
-        tags:
-            - { name: doctrine.event_subscriber }
-
-    msi_admin.block.text:
-        class: Msi\AdminBundle\Block\Handler\TextBlockHandler
-
-    msi_admin.block.action:
-        class: Msi\AdminBundle\Block\Handler\ActionBlockHandler
-        arguments: [ %msi_cms.block.actions%, @fragment.handler ]
-
-    msi_admin.block.template:
-        class: Msi\AdminBundle\Block\Handler\TemplateBlockHandler
-        arguments: [ %msi_cms.block.templates%, @templating ]
-
-    msi_admin.block.menu:
-        class: Msi\AdminBundle\Block\Handler\MenuBlockHandler
-        arguments: [ @knp_menu.factory, @knp_menu.renderer.list, @msi_cms.menu_root_manager ]
-
-    msi_admin._voter:
-        class: Msi\AdminBundle\Security\Voter\AclVoter
-        arguments: [ @service_container ]
-        public: false
-        tags:
-            - { name: security.voter }
-
-    msi_admin.uploader:
-        class: Msi\AdminBundle\Tools\Uploader
-        arguments: [@kernel]
-
-    msi_admin.class_analyzer:
-        class: Msi\AdminBundle\Tools\ClassAnalyzer
-
-    knp_menu.node_loader:
-        class: Knp\Menu\Loader\NodeLoader
-        arguments: [ @knp_menu.factory ]
-
-    msi_admin.breadcrumb.factory:
-        class: Msi\AdminBundle\Breadcrumb\BreadcrumbFactory
-
-    msi_admin.doctrine.orm.naming_strategy:
-        class: Msi\AdminBundle\Doctrine\Mapping\DefaultNamingStrategy
+    msi_cms.mailer:
+        class: Msi\CmsBundle\Mailer\Mailer
+        arguments: [@mailer, @msi_cms.email_manager, @templating]

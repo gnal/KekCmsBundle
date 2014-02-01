@@ -58,9 +58,11 @@ class PageAdmin extends Admin
 
             $parentChoices = $qb->getQuery()->execute();
 
+            if (count($this->container->getParameter('msi_cms.page.layouts')) > 1) {
+                $builder->add('template', 'choice', ['choices' => $this->container->getParameter('msi_cms.page.layouts')]);
+            }
+
             $builder
-                ->add('template', 'choice', ['choices' => $this->container->getParameter('msi_cms.page.layouts')])
-                ->add('showTitle')
                 ->add('route', 'choice', [
                     'required' => false,
                     'empty_value' => '',
@@ -81,6 +83,8 @@ class PageAdmin extends Admin
             ;
         }
 
+        $builder->add('showTitle');
+
         if ($this->container->getParameter('msi_cms.multisite')) {
             $builder->add('site', 'entity', [
                 'class' => $this->container->getParameter('msi_cms.site.class'),
@@ -92,13 +96,13 @@ class PageAdmin extends Admin
     {
         $builder
             ->add('title')
+            ->add('published', 'checkbox')
             ->add('body', 'textarea', [
                 'attr' => [
                     'class' => 'tinymce',
                 ],
             ])
             ->add('metaTitle')
-            ->add('metaKeywords', 'textarea')
             ->add('metaDescription', 'textarea')
         ;
     }
@@ -133,7 +137,7 @@ class PageAdmin extends Admin
         if (!$this->container->getParameter('msi_cms.multisite')) {
             $entity->setSite($this->container->get('msi_admin.provider')->getSite());
         }
-
+        // most often theres only one layout so we just remove the input from the form and put it here
         if ($entity->getTemplate() === null) {
             $entity->setTemplate(array_keys($this->container->getParameter('msi_cms.page.layouts'))[0]);
         }

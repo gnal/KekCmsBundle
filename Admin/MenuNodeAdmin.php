@@ -58,7 +58,7 @@ class MenuNodeAdmin extends Admin
         $builder
             ->add('page', 'entity', [
                 'required' => false,
-                'empty_value' => 'choisir une page',
+                // 'empty_value' => 'choisir une page',
                 'class' => $this->container->getParameter('msi_cms.page.class'),
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('a')
@@ -87,7 +87,7 @@ class MenuNodeAdmin extends Admin
     public function buildTranslationForm(FormBuilder $builder)
     {
         $builder
-            // ->add('published', 'checkbox')
+            ->add('published', 'checkbox')
             ->add('name')
             ->add('route', 'text', ['label' => 'Url'])
         ;

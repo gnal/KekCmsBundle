@@ -40,11 +40,6 @@ abstract class PageTranslation
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $metaKeywords;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
     protected $metaDescription;
 
     /**
@@ -89,18 +84,6 @@ abstract class PageTranslation
     public function setTitle($title)
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getMetaKeywords()
-    {
-        return $this->metaKeywords;
-    }
-
-    public function setMetaKeywords($metaKeywords)
-    {
-        $this->metaKeywords = $metaKeywords;
 
         return $this;
     }

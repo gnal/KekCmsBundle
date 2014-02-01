@@ -12,9 +12,8 @@ class PageAdmin extends Admin
     public function configure()
     {
         $this->options = [
-            'form_template' => 'MsiAdminBundle:Page:form.html.twig',
-            'sidebar_template' => 'MsiAdminBundle:Page:sidebar.html.twig',
-            'search_fields' => ['a.route', 'translations.title'],
+            'form_template' => 'MsiCmsBundle:Page:form.html.twig',
+            'search_fields' => ['a.id', 'a.route', 'translations.title'],
             'order_by'      => ['translations.title' => 'ASC'],
         ];
     }
@@ -25,6 +24,10 @@ class PageAdmin extends Admin
             ->add('published', 'boolean')
             ->add('title')
         ;
+
+        if ($this->getUser()->isSuperAdmin()) {
+            $builder->add('route');
+        }
     }
 
     public function buildForm(FormBuilder $builder)

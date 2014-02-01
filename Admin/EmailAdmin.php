@@ -11,6 +11,7 @@ class EmailAdmin extends Admin
     public function configure()
     {
         $this->options['form_template'] = 'MsiCmsBundle:Email:form.html.twig';
+        $this->options['search_fields'] = ['a.id', 'a.name', 'a.subject'];
     }
 
     public function buildGrid(GridBuilder $builder)

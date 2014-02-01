@@ -14,9 +14,8 @@ class BlockAdmin extends Admin
     public function configure()
     {
         $this->options = [
-            'search_fields' => ['a.type', 'a.name', 'a.slot'],
-            'form_template' => 'MsiAdminBundle:Block:form.html.twig',
-            'sidebar_template' => 'MsiAdminBundle:Block:sidebar.html.twig',
+            'search_fields' => ['a.id', 'a.type', 'a.name', 'a.slot'],
+            'form_template' => 'MsiCmsBundle:Block:form.html.twig',
         ];
     }
 
@@ -41,19 +40,32 @@ class BlockAdmin extends Admin
                 $builder->add('settings', $settingsType);
             }
 
-            $builder->add('pages', 'entity', [
-                'multiple' => true,
-                'expanded' => true,
-                'class' => $this->container->getParameter('msi_cms.page.class'),
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('a')
-                        ->leftJoin('a.translations', 't')
-                        ->addSelect('t')
-                        ->addOrderBy('t.title', 'ASC')
-                    ;
-                },
-            ]);
+            // $builder->add('pages', 'entity', [
+            //     'multiple' => true,
+            //     'expanded' => true,
+            //     'class' => $this->container->getParameter('msi_cms.page.class'),
+            //     'query_builder' => function(EntityRepository $er) {
+            //         return $er->createQueryBuilder('a')
+            //             ->leftJoin('a.translations', 't')
+            //             ->addSelect('t')
+            //             ->addOrderBy('t.title', 'ASC')
+            //         ;
+            //     },
+            // ]);
         }
+
+        $builder->add('pages', 'entity', [
+            'multiple' => true,
+            'expanded' => true,
+            'class' => $this->container->getParameter('msi_cms.page.class'),
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('a')
+                    ->leftJoin('a.translations', 't')
+                    ->addSelect('t')
+                    ->addOrderBy('t.title', 'ASC')
+                ;
+            },
+        ]);
 
         $types = [];
         foreach ($this->container->getServiceIds() as $id) {

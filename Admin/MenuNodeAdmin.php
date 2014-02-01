@@ -14,11 +14,11 @@ class MenuNodeAdmin extends Admin
     public function configure()
     {
         $this->options = [
-            'sidebar_template' => 'MsiAdminBundle:MenuNode:sidebar.html.twig',
-            'index_template' => 'MsiAdminBundle:MenuNode:index.html.twig',
+            'index_template' => 'MsiCmsBundle:MenuNode:index.html.twig',
             'controller' => 'MsiAdminBundle:Admin/MenuNode:',
-            'form_template' => 'MsiAdminBundle:MenuNode:form.html.twig',
+            'form_template' => 'MsiCmsBundle:MenuNode:form.html.twig',
             'order_by' => [],
+            'search_fields' => ['a.id', 'translations.name'],
         ];
     }
 

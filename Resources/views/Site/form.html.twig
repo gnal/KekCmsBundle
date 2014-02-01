@@ -1,0 +1,36 @@
+{% form_theme form 'MsiAdminBundle:Form:form.html.twig' %}
+
+<ul class="nav nav-tabs ">
+    <li class="active"><a href="#tab1" data-toggle="tab">{{ 'Content'|trans }}</a></li>
+    <li><a href="#tab2" data-toggle="tab">{{ 'Settings'|trans }}</a></li>
+    <li><a href="#tab3" data-toggle="tab">{{ 'SEO'|trans }}</a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="tab1">
+        {{ form_row(form.host) }}
+        {% for translation in form.translations %}
+            {{ form_row(translation.brand) }}
+            {{ form_row(translation.offlineMessage) }}
+        {% endfor %}
+    </div>
+
+    <div class="tab-pane fade" id="tab2">
+        <fieldset>
+            {% for translation in form.translations %}
+                {{ form_row(translation.published) }}
+            {% endfor %}
+            {{ form_row(form.isDefault) }}
+            {{ form_row(form.locale) }}
+            {{ form_row(form.locales) }}
+        </fieldset>
+    </div>
+
+    <div class="tab-pane fade" id="tab3">
+        {% for translation in form.translations %}
+            {{ form_row(translation.metaDescription) }}
+        {% endfor %}
+    </div>
+</div>
+
+{{ form_rest(form) }}

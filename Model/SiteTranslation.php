@@ -11,11 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 abstract class SiteTranslation
 {
     use \Msi\AdminBundle\Doctrine\Extension\Model\Translation;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $metaKeywords;
+    use \Msi\AdminBundle\Doctrine\Extension\Model\Publishable;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -59,18 +55,6 @@ abstract class SiteTranslation
     public function getId()
     {
         return $this->id;
-    }
-
-    public function getMetaKeywords()
-    {
-        return $this->metaKeywords;
-    }
-
-    public function setMetaKeywords($metaKeywords)
-    {
-        $this->metaKeywords = $metaKeywords;
-
-        return $this;
     }
 
     public function getMetaDescription()

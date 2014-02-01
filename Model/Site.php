@@ -20,11 +20,6 @@ abstract class Site
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $enabled;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
     protected $isDefault;
 
     /**
@@ -51,18 +46,6 @@ abstract class Site
     public function setIsDefault($isDefault)
     {
         $this->isDefault = $isDefault;
-
-        return $this;
-    }
-
-    public function getEnabled()
-    {
-        return $this->enabled;
-    }
-
-    public function setEnabled($enabled)
-    {
-        $this->enabled = $enabled;
 
         return $this;
     }

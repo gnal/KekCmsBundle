@@ -1,0 +1,48 @@
+{% form_theme form 'MsiAdminBundle:Form:form.html.twig' %}
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#content2" data-toggle="tab">{{ 'Content'|trans }}</a></li>
+    <li><a href="#main1" data-toggle="tab">{{ 'Settings'|trans }}</a></li>
+    <li><a href="#seo" data-toggle="tab">{{ 'SEO'|trans }}</a></li>
+    {% if app.user.isSuperAdmin %}<li><a href="#admin" data-toggle="tab">{{ 'Admin'|trans }}</a></li>{% endif %}
+</ul>
+
+<div class="tab-content">
+    {% if app.user.isSuperAdmin %}
+    <div class="tab-pane fade" id="main1">
+        {% for translation in form.translations %}
+            {{ form_row(translation.published) }}
+        {% endfor %}
+        {% if admin.container.parameter('msi_cms.multisite') %}{{ form_row(form.site) }}{% endif %}
+        {{ form_row(form.showTitle) }}
+        {% if form.template is defined %}
+            {{ form_row(form.template) }}
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="tab-pane fade active in" id="content2">
+        {% for translation in form.translations %}
+            {{ form_row(translation.title) }}
+            <div class="form-group">
+                {{ form_widget(translation.body) }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="tab-pane fade" id="seo">
+        {% for translation in form.translations %}
+            {{ form_row(translation.metaDescription) }}
+            {{ form_row(translation.metaTitle) }}
+        {% endfor %}
+    </div>
+    {% if app.user.isSuperAdmin %}
+        <div class="tab-pane fade" id="admin">
+            {{ form_row(form.route) }}
+            {{ form_row(form.css) }}
+            {{ form_row(form.js) }}
+            {{ form_row(form.parent) }}
+        </div>
+    {% endif %}
+</div>
+{{ form_rest(form) }}

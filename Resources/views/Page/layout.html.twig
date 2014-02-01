@@ -1,0 +1,61 @@
+{% extends 'MsiBaseBundle::base.html.twig' %}
+
+{% block meta_description %}
+{% spaceless %}
+{% if page.translation.metaDescription %}
+    {{ page.translation.metaDescription }}
+{% else %}
+    {{ site.translation.metaDescription }}
+{% endif %}
+{% endspaceless %}
+{% endblock %}
+
+{% block meta_title %}
+{% spaceless %}
+{% if page.translation.metaTitle %}
+    {{ page.translation.metaTitle }}
+{% else %}
+    {{ block('title') }}
+{% endif %}
+{% endspaceless %}
+{% endblock %}
+
+{% block brand %}
+{{ site.translation.brand|raw }}
+{% endblock %}
+
+{% block title %}{{ page.translation.title }}{% endblock %}
+
+{% block css %}
+{{ page.css|raw }}
+{% endblock css %}
+
+{% block js %}
+{{ page.js|raw }}
+{% endblock js %}
+
+{% block page_content %}
+{% spaceless %}
+{% set content = block('content') %}
+{% if content %}
+{{ content|raw }}
+{% else %}
+{{ page.translation.body|raw }}
+{% endif %}
+{% endspaceless %}
+{% endblock %}
+
+{% block flash %}
+{% spaceless %}
+{% for flashMessage in app.session.flashbag.get('success') %}
+    <div class="alert alert-success fade in">
+        <i class="icon-large icon-ok-sign"></i> <span>{{ flashMessage }}</span>
+    </div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('error') %}
+    <div class="alert alert-danger fade in">
+        <i class="icon-large icon-exclamation-sign"></i> <span>{{ flashMessage }}</span>
+    </div>
+{% endfor %}
+{% endspaceless %}
+{% endblock %}

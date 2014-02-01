@@ -1,0 +1,47 @@
+{% form_theme form 'MsiAdminBundle:Form:form.html.twig' %}
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">{{ 'Content'|trans }}</a></li>
+    <li><a href="#tab2" data-toggle="tab">{{ 'Settings'|trans }}</a></li>
+    {% if app.user.isSuperAdmin %}
+        <li><a href="#tab3" data-toggle="tab">{{ 'ACL'|trans }}</a></li>
+    {% endif %}
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="tab1">
+        {{ form_row(form.name) }}
+        {% if admin.object.id %}
+            {% if admin.container.get(admin.object.type).name == 'text' %}
+            {% for translation in form.translations %}
+                {{ form_widget(translation.settings.body) }}
+            {% endfor %}
+            {% elseif admin.container.get(admin.object.type).name == 'action' %}
+                {{ form_row(form.settings.action) }}
+                {{ form_row(form.settings.query) }}
+            {% elseif admin.container.get(admin.object.type).name == 'template' %}
+                {{ form_row(form.settings.template) }}
+            {% elseif admin.container.get(admin.object.type).name == 'menu' %}
+                {{ form_row(form.settings.menu) }}
+                {{ form_row(form.settings.class) }}
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="tab-pane fade" id="tab2">
+        {% for translation in form.translations %}
+            {{ form_row(translation.published) }}
+        {% endfor %}
+        {{ form_row(form.type) }}
+        {{ form_row(form.slot) }}
+        {{ form_row(form.pages) }}
+    </div>
+
+    {% if app.user.isSuperAdmin %}
+    <div class="tab-pane fade" id="tab3">
+        {{ form_row(form.operators) }}
+    </div>
+    {% endif %}
+</div>
+
+{{ form_rest(form) }}

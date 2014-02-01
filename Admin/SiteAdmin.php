@@ -11,16 +11,15 @@ class SiteAdmin extends Admin
     public function configure()
     {
         $this->options = [
-            'form_template' => 'MsiAdminBundle:Site:form.html.twig',
-            'sidebar_template' => 'MsiAdminBundle:Site:sidebar.html.twig',
-            // 'search_fields' => ['a.id', 'a.host', 'translations.brand'],
+            'form_template' => 'MsiCmsBundle:Site:form.html.twig',
+            'search_fields' => ['a.id', 'a.host', 'translations.brand'],
         ];
     }
 
     public function buildGrid(GridBuilder $builder)
     {
         $builder
-            ->add('enabled', 'boolean')
+            ->add('published', 'boolean')
             ->add('brand')
             ->add('host')
         ;
@@ -58,9 +57,9 @@ class SiteAdmin extends Admin
     public function buildTranslationForm(FormBuilder $builder)
     {
         $builder
+            ->add('published', 'checkbox')
             ->add('brand')
             ->add('offlineMessage', 'textarea')
-            ->add('metaKeywords', 'textarea')
             ->add('metaDescription', 'textarea')
         ;
     }

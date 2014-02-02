@@ -26,6 +26,6 @@ services:
         tags:
             - { name: twig.extension }
 
-    msi_cms.mailer:
-        class: Msi\CmsBundle\Mailer\Mailer
-        arguments: [@mailer, @msi_cms.email_manager, @templating]
+    # msi_cms.mailer:
+    #     class: Msi\CmsBundle\Mailer\Mailer
+    #     arguments: [@mailer, @msi_cms.email_manager, @templating]

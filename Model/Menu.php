@@ -23,6 +23,11 @@ abstract class Menu implements NodeInterface
     protected $id;
 
     /**
+     * @ORM\Column(type="string", unique=true, nullable=true)
+     */
+    protected $uniqueName;
+
+    /**
      * @Gedmo\TreeLevel
      * @ORM\Column(type="integer")
      */
@@ -78,7 +83,7 @@ abstract class Menu implements NodeInterface
 
         if ($this->page) {
             if (!$this->page->getRoute()) {
-                $this->options['route'] = 'msi_page_show';
+                $this->options['route'] = 'msi_cms_page_show';
                 $this->options['routeParameters'] = ['slug' => $this->page->getTranslation()->getSlug()];
             } else {
                 $this->options['route'] = $this->page->getRoute();
@@ -102,6 +107,18 @@ abstract class Menu implements NodeInterface
         }
 
         return $this->options;
+    }
+
+    public function getUniqueName()
+    {
+        return $this->uniqueName;
+    }
+
+    public function setUniqueName($uniqueName)
+    {
+        $this->uniqueName = $uniqueName;
+
+        return $this;
     }
 
     public function getAttr()
@@ -252,6 +269,6 @@ abstract class Menu implements NodeInterface
 
     public function __toString()
     {
-        return (string) $this->getTranslation()->getName();
+        return (string) $this->getTranslation()->getName() ?: $this->uniqueName;
     }
 }

@@ -5,7 +5,12 @@ namespace Msi\CmsBundle\Admin;
 use Msi\AdminBundle\Admin\Admin;
 use Msi\AdminBundle\Grid\GridBuilder;
 use Symfony\Component\Form\FormBuilder;
+use JMS\DiExtraBundle\Annotation as DI;
 
+/**
+ * @DI\Service("msi_cms_site_admin", parent="msi_admin.admin")
+ * @DI\Tag("msi.admin")
+ */
 class SiteAdmin extends Admin
 {
     public function configure()
@@ -14,6 +19,8 @@ class SiteAdmin extends Admin
             'form_template' => 'MsiCmsBundle:Site:form.html.twig',
             'search_fields' => ['a.id', 'a.host', 'translations.brand'],
         ];
+
+        $this->class = $this->container->getParameter('msi_cms.site.class');
     }
 
     public function buildGrid(GridBuilder $builder)

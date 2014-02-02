@@ -1,31 +1,30 @@
 <?php
 
 namespace Msi\CmsBundle\Mailer;
+use JMS\DiExtraBundle\Annotation as DI;
 
+/**
+ * @DI\Service("msi_cms.mailer")
+ */
 class Mailer
 {
-    protected $mailer;
-    protected $emailManager;
-    protected $templating;
+    protected $container;
 
-    public function __construct($mailer, $emailManager, $templating)
+    /**
+     * @DI\InjectParams({
+     *     "container" = @DI\Inject("service_container")
+     * })
+     */
+    public function __construct($container)
     {
-        $this->mailer = $mailer;
-        $this->emailManager = $emailManager;
-        $this->templating = $templating;
+        $this->container = $container;
     }
 
     public function sendEmail($name, $data = null, $toWho = null, $attachments = [])
     {
-        $emails = $this->emailManager->findAll(
-            [
-                'a.name' => $name,
-                'translations.published' => true,
-            ],
-            [
-                'a.translations' => 'translations',
-            ]
-        );
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $repo = $em->getRepository($this->container->getParameter('msi_cms.email.class'));
+        $emails = $repo->findAllPublishedByName($name);
 
         foreach ($emails as $email) {
             if ($data) {
@@ -43,7 +42,7 @@ class Mailer
                 $body = $email->getTranslation()->getBody();
             }
 
-            $rendered = $this->templating->render('MsiCmsBundle:Email:base.html.twig', [
+            $rendered = $this->container->get('templating')->render('MsiCmsBundle:Email:base.html.twig', [
                 'subject' => $email->getTranslation()->getSubject(),
                 'body' => $body,
             ]);
@@ -103,6 +102,6 @@ class Mailer
             $message->attach(\Swift_Attachment::fromPath($attachment));
         }
 
-        $this->mailer->send($message);
+        $this->container->get('mailer')->send($message);
     }
 }

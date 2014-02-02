@@ -24,6 +24,7 @@ class Configuration implements ConfigurationInterface
             ->end();
 
         $this->addSiteSection($rootNode);
+        $this->addEmailSection($rootNode);
         $this->addMenuSection($rootNode);
         $this->addPageSection($rootNode);
         $this->addBlockSection($rootNode);
@@ -38,6 +39,17 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('site_class')
                     ->defaultValue('Msi\CmsBundle\Entity\Site')
+                    ->cannotBeEmpty()
+                ->end()
+            ->end();
+    }
+
+    private function addEmailSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->scalarNode('email_class')
+                    ->defaultValue('Msi\CmsBundle\Entity\Email')
                     ->cannotBeEmpty()
                 ->end()
             ->end();

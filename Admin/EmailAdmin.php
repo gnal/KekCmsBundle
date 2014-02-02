@@ -5,13 +5,20 @@ namespace Msi\CmsBundle\Admin;
 use Msi\AdminBundle\Admin\Admin;
 use Msi\AdminBundle\Grid\GridBuilder;
 use Symfony\Component\Form\FormBuilder;
+use JMS\DiExtraBundle\Annotation as DI;
 
+/**
+ * @DI\Service("msi_cms_email_admin", parent="msi_admin.admin")
+ * @DI\Tag("msi.admin")
+ */
 class EmailAdmin extends Admin
 {
     public function configure()
     {
         $this->options['form_template'] = 'MsiCmsBundle:Email:form.html.twig';
         $this->options['search_fields'] = ['a.id', 'a.name', 'a.subject'];
+
+        $this->class = $this->container->getParameter('msi_cms.email.class');
     }
 
     public function buildGrid(GridBuilder $builder)

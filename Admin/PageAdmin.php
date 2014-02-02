@@ -6,7 +6,12 @@ use Msi\AdminBundle\Admin\Admin;
 use Msi\AdminBundle\Grid\GridBuilder;
 use Symfony\Component\Form\FormBuilder;
 use Doctrine\ORM\QueryBuilder;
+use JMS\DiExtraBundle\Annotation as DI;
 
+/**
+ * @DI\Service("msi_cms_page_admin", parent="msi_admin.admin")
+ * @DI\Tag("msi.admin")
+ */
 class PageAdmin extends Admin
 {
     public function configure()
@@ -16,6 +21,8 @@ class PageAdmin extends Admin
             'search_fields' => ['a.id', 'a.route', 'translations.title'],
             'order_by'      => ['translations.title' => 'ASC'],
         ];
+
+        $this->class = $this->container->getParameter('msi_cms.page.class');
     }
 
     public function buildGrid(GridBuilder $builder)
@@ -45,21 +52,7 @@ class PageAdmin extends Admin
                 $choices[$name] = $name;
             }
 
-            $qb = $this->container->get('msi_cms.page_manager')->getMasterQueryBuilder(
-                [],
-                [
-                    'a.translations' => 'translations',
-                ],
-                [
-                    'translations.title' => 'ASC',
-                ]
-            );
-
-            if ($id = $this->getObject()->getId()) {
-                $qb->andWhere($qb->expr()->neq('a.id', $id));
-            }
-
-            $parentChoices = $qb->getQuery()->execute();
+            $parentChoices = $this->getRepository()->findAdminFormParentChoices($this->getObject()->getId());
 
             if (count($this->container->getParameter('msi_cms.page.layouts')) > 1) {
                 $builder->add('template', 'choice', ['choices' => $this->container->getParameter('msi_cms.page.layouts')]);

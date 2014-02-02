@@ -7,7 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Msi\CmsBundle\Model\Menu as BaseMenu;
 
 /**
- * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
+ * @ORM\Entity(repositoryClass="Msi\CmsBundle\Entity\MenuRepository")
  * @Gedmo\Tree(type="nested")
  */
 class Menu extends BaseMenu

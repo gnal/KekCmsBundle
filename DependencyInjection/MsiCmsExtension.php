@@ -24,7 +24,6 @@ class MsiCmsExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-        $loader->load('admin.yml');
 
         $this->registerConfiguration($config, $container);
     }
@@ -34,6 +33,7 @@ class MsiCmsExtension extends Extension
         $container->setParameter('msi_cms.multisite', $config['multisite']);
         $container->setParameter('msi_cms.app_locales', $config['app_locales']);
         $container->setParameter('msi_cms.site.class', $config['site_class']);
+        $container->setParameter('msi_cms.email.class', $config['email_class']);
         $container->setParameter('msi_cms.menu.class', $config['menu_class']);
         $container->setParameter('msi_cms.page.class', $config['page_class']);
         $container->setParameter('msi_cms.page.layouts', $config['page_layouts']);

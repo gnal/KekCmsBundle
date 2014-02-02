@@ -1,8 +1,3 @@
-Msi\CmsBundle\Entity\MenuTranslation:
-    properties:
-        name:
-            - NotBlank: ~
-
 Msi\CmsBundle\Entity\Page:
     properties:
         template:

@@ -7,3 +7,5 @@ Body: Content
 availablevars_data_help: "Variables that you can use in the content. How to use: Welcome #firstName# #lastName#!"
 
 Offlinemessage: Offline Message
+
+Uniquename: Unique Name

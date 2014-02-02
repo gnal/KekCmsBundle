@@ -25,13 +25,16 @@ class CmsExtension extends \Twig_Extension
             return $globals;
         }
         $request = $this->container->get('request');
+        $workingLocale = $this->container->get('msi_admin.provider')->getWorkingLocale();
 
         $site = $this->container->get('msi_admin.provider')->getSite();
         $globals['site'] = $site;
 
-        $page = $this->container->get('msi_cms.page_manager')->findByRoute($request->attributes->get('_route'));
+        $pageClass = $this->container->getParameter('msi_cms.page.class');
+        $page = $this->container->get('doctrine')->getRepository($pageClass)->findByRoute($request->attributes->get('_route'));
         if (!$page) {
-            $page = $this->container->get('msi_cms.page_manager')->findOrCreate($this->container->get('msi_admin.provider')->getWorkingLocale());
+            $page = new $pageClass();
+            $page->createTranslation($workingLocale);
         }
         $globals['page'] = $page;
 

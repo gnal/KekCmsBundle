@@ -2,40 +2,30 @@
 
 namespace Msi\CmsBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class PageController extends ContainerAware
+class PageController extends Controller
 {
-    public function showAction(Request $request)
+    /**
+     * @Route("/{_locale}/{slug}")
+     * @Template()
+     */
+    public function showAction()
     {
-        $criteria = [
-            'translations.published' => true,
-            'a.site' => $this->container->get('msi_admin.provider')->getSite(),
-            'translations.locale' => $request->getLocale(),
-        ];
+        $site = $this->container->get('msi_admin.provider')->getSite();
+        $locale = $this->getRequest()->getLocale();
+        $slug = $this->getRequest()->attributes->get('slug');
 
-        $criteria['translations.slug'] = $request->attributes->get('slug');
-
-        $qb = $this->container->get('msi_cms.page_manager')->getFindByQueryBuilder(
-            $criteria,
-            [
-                'a.translations' => 'translations',
-                'a.blocks' => 'blocks',
-                'blocks.translations' => 'blocks_translations',
-            ],
-            ['blocks.position' => 'ASC']
-        );
-
-        $qb->andWhere($qb->expr()->isNull('a.route'));
-
-        $parameters['page'] = $qb->getQuery()->getOneOrNullResult();
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $repo = $em->getRepository($this->container->getParameter('msi_cms.page.class'));
+        $parameters['page'] = $repo->findCmsPage($site, $slug, $locale);
 
         if (!$parameters['page']) {
-            throw new NotFoundHttpException();
+            throw $this->createNotFoundException();
         }
 
-        return $this->container->get('templating')->renderResponse($parameters['page']->getTemplate(), $parameters);
+        return $parameters;
     }
 }

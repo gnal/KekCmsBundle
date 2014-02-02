@@ -8,7 +8,12 @@ use Symfony\Component\Form\FormBuilder;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Msi\AdminBundle\Form\Type\DynamicType;
+use JMS\DiExtraBundle\Annotation as DI;
 
+/**
+ * @DI\Service("msi_cms_block_admin", parent="msi_admin.admin")
+ * @DI\Tag("msi.admin")
+ */
 class BlockAdmin extends Admin
 {
     public function configure()
@@ -17,6 +22,8 @@ class BlockAdmin extends Admin
             'search_fields' => ['a.id', 'a.type', 'a.name', 'a.slot'],
             'form_template' => 'MsiCmsBundle:Block:form.html.twig',
         ];
+
+        $this->class = $this->container->getParameter('msi_cms.block.class');
     }
 
     public function buildGrid(GridBuilder $builder)

@@ -8,7 +8,13 @@ use Symfony\Component\Form\FormBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @DI\Service("msi_cms_menu_node_admin", parent="msi_admin.admin")
+ * @DI\Tag("msi.admin")
+ */
 class MenuNodeAdmin extends Admin
 {
     public function configure()
@@ -20,6 +26,9 @@ class MenuNodeAdmin extends Admin
             'order_by' => [],
             'search_fields' => ['a.id', 'translations.name'],
         ];
+
+        $this->class = $this->container->getParameter('msi_cms.menu.class');
+        $this->setParent($this->container->get('msi_cms_menu_root_admin'));
     }
 
     public function buildGrid(GridBuilder $builder)
@@ -32,28 +41,9 @@ class MenuNodeAdmin extends Admin
 
     public function buildForm(FormBuilder $builder)
     {
-        $qb = $this->getObjectManager()->getFindByQueryBuilder(
-            ['a.menu' => $this->container->get('request')->query->get('parentId')],
-            ['a.translations' => 't', 'a.children' => 'c'],
-            ['a.lft' => 'ASC']
-        );
+        $parentId = $this->container->get('request')->query->get('parentId');
 
-        if ($this->getObject()->getId()) {
-            $qb->andWhere('a.id != :match')->setParameter('match', $this->getObject()->getId());
-            $i = 0;
-            foreach ($this->getObject()->getChildren() as $child) {
-                $qb->andWhere('a.id != :match'.$i)->setParameter('match'.$i, $child->getId());
-                $i++;
-            }
-        }
-
-        if ($this->getObject()->getChildren()->count()) {
-            $qb->andWhere('a.lvl <= :bar')->setParameter('bar', $this->getObject()->getLvl() - 1);
-        }
-
-        $qb->andWhere('a.lvl <= :foo')->setParameter('foo', 2);
-
-        $choices = $qb->getQuery()->execute();
+        $parentChoices = $this->getRepository()->findAdminFormParentChoices($parentId, $this->getObject());
 
         $builder
             ->add('page', 'entity', [
@@ -69,7 +59,7 @@ class MenuNodeAdmin extends Admin
             ])
             ->add('parent', 'entity', [
                 'class' => $this->container->getParameter('msi_cms.menu.class'),
-                'choices' => $choices,
+                'choices' => $parentChoices,
                 'property' => 'toTree',
             ])
             ->add('targetBlank', 'checkbox')
@@ -88,18 +78,22 @@ class MenuNodeAdmin extends Admin
     {
         $builder
             ->add('published', 'checkbox')
-            ->add('name')
+            ->add('name', 'text', [
+                'constraints' => [new NotBlank],
+            ])
             ->add('route', 'text', ['label' => 'Url'])
         ;
     }
 
-    public function buildListQuery(QueryBuilder $qb)
+    public function configureAdminFindAllQuery(QueryBuilder $qb)
     {
-        $qb->resetDQLPart('where');
-        $qb->andWhere('a.menu = :eqMatch1');
+        // $qb->resetDQLPart('where');
+        $qb
+            ->andWhere('a.menu = :parent')
+            ->setParameter('parent', $this->getParentObject())
+        ;
         $qb->andWhere('a.lvl != 0');
         $qb->addOrderBy('a.lft', 'ASC');
-        // $qb->andWhere('t.locale = :eqMatch1');
     }
 
     public function prePersist($entity)

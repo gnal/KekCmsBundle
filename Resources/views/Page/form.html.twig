@@ -14,7 +14,7 @@
         {% for translation in form.translations %}
             {{ form_row(translation.published) }}
         {% endfor %}
-        {% if admin.container.parameter('msi_cms.multisite') %}{{ form_row(form.site) }}{% endif %}
+        {% if is_multisite %}{{ form_row(form.site) }}{% endif %}
         {{ form_row(form.showTitle) }}
         {% if form.template is defined %}
             {{ form_row(form.template) }}

@@ -30,6 +30,9 @@ class CmsExtension extends \Twig_Extension
         $site = $this->container->get('msi_admin.provider')->getSite();
         $globals['site'] = $site;
 
+        $globals['is_multisite'] = $this->container->getParameter('msi_cms.multisite');
+        $globals['tiny_mce_template'] = $this->container->getParameter('msi_admin.tiny_mce');
+
         $pageClass = $this->container->getParameter('msi_cms.page.class');
         $page = $this->container->get('doctrine')->getRepository($pageClass)->findByRoute($request->attributes->get('_route'));
         if (!$page) {

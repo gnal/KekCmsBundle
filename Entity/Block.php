@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Msi\CmsBundle\Model\Block as BaseBlock;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Msi\AdminBundle\Entity\EntityRepository")
  */
 class Block extends BaseBlock
 {

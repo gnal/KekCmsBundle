@@ -4,7 +4,7 @@ namespace Msi\CmsBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\MappedSuperclass
@@ -23,6 +23,7 @@ abstract class PageTranslation
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     protected $title;
 

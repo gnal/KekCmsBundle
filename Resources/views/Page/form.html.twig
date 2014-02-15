@@ -40,9 +40,9 @@
     {% if app.user.isSuperAdmin %}
         <div class="tab-pane fade" id="admin">
             {{ form_row(form.route) }}
+            {{ form_row(form.parent) }}
             {{ form_row(form.css) }}
             {{ form_row(form.js) }}
-            {{ form_row(form.parent) }}
         </div>
     {% endif %}
 </div>

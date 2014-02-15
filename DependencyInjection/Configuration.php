@@ -15,7 +15,6 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->booleanNode('multisite')->defaultFalse()->end()
                 ->arrayNode('app_locales')
                     ->prototype('scalar')->end()
                     ->defaultValue(['en', 'fr'])

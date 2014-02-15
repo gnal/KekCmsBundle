@@ -25,12 +25,12 @@ class CmsExtension extends \Twig_Extension
             return $globals;
         }
         $request = $this->container->get('request');
-        $workingLocale = $this->container->get('msi_admin.provider')->getWorkingLocale();
+        $workingLocale = $this->container->get('msi_cms.site_provider')->getWorkingLocale();
 
-        $site = $this->container->get('msi_admin.provider')->getSite();
+        $site = $this->container->get('msi_cms.site_provider')->getSite();
         $globals['site'] = $site;
 
-        $globals['is_multisite'] = $this->container->getParameter('msi_cms.multisite');
+        $globals['is_multisite'] = $this->container->get('msi_cms.site_provider')->hasManySites();
         $globals['tiny_mce_template'] = $this->container->getParameter('msi_admin.tiny_mce');
 
         $pageClass = $this->container->getParameter('msi_cms.page.class');

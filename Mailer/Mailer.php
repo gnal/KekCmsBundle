@@ -1,6 +1,7 @@
 <?php
 
 namespace Msi\CmsBundle\Mailer;
+
 use JMS\DiExtraBundle\Annotation as DI;
 
 /**

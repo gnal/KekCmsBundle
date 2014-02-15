@@ -2,10 +2,9 @@
 
 namespace Msi\CmsBundle\Controller;
 
-use Msi\AdminBundle\Controller\CoreController;
 use Symfony\Component\HttpFoundation\Request;
 
-class MenuNodeController extends CoreController
+class MenuNodeController
 {
     public function sortAction(Request $request)
     {

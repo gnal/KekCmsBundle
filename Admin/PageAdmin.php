@@ -81,10 +81,11 @@ class PageAdmin extends Admin
 
         $builder->add('showTitle');
 
-        if ($this->container->getParameter('msi_cms.multisite')) {
-            $builder->add('site', 'entity', [
-                'class' => $this->container->getParameter('msi_cms.site.class'),
-            ]);
+        if ($this->container->get('msi_cms.site_provider')->hasManySites()) {
+            // $builder->add('site', 'entity', [
+            //     'class' => $this->container->getParameter('msi_cms.site.class'),
+            // ]);
+            $builder->add('site');
         }
     }
 
@@ -103,39 +104,8 @@ class PageAdmin extends Admin
         ;
     }
 
-    // public function buildFilterForm(FormBuilder $builder)
-    // {
-    //     if ($this->container->getParameter('msi_cms.multisite')) {
-    //         $builder->add('site', 'entity', [
-    //             'label' => ' ',
-    //             'empty_value' => '- Site -',
-    //             'class' => $this->container->getParameter('msi_cms.site.class'),
-    //         ]);
-    //     }
-
-    //     $builder->add('home', 'choice', [
-    //         'label' => ' ',
-    //         'empty_value' => '- '.$this->container->get('translator')->trans('Home').' -',
-    //         'choices' => [
-    //             '1' => $this->container->get('translator')->trans('Yes'),
-    //             '0' => $this->container->get('translator')->trans('No'),
-    //         ],
-    //     ]);
-    // }
-
     public function buildListQuery(QueryBuilder $qb)
     {
         $qb->addOrderBy('translations.title', 'ASC');
-    }
-
-    public function prePersist($entity)
-    {
-        if (!$this->container->getParameter('msi_cms.multisite')) {
-            $entity->setSite($this->container->get('msi_admin.provider')->getSite());
-        }
-        // most often theres only one layout so we just remove the input from the form and put it here
-        if ($entity->getTemplate() === null) {
-            $entity->setTemplate(array_keys($this->container->getParameter('msi_cms.page.layouts'))[0]);
-        }
     }
 }

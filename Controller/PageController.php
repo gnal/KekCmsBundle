@@ -14,7 +14,7 @@ class PageController extends Controller
      */
     public function showAction()
     {
-        $site = $this->container->get('msi_admin.provider')->getSite();
+        $site = $this->container->get('msi_cms.site_provider')->getSite();
         $locale = $this->getRequest()->getLocale();
         $slug = $this->getRequest()->attributes->get('slug');
 

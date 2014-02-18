@@ -6,7 +6,7 @@ use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
 class MenuRepository extends NestedTreeRepository
 {
-    use \Msi\CmsBundle\Entity\RepositoryMethods;
+    use \Msi\AdminBundle\Entity\EntityRepositoryMethods;
 
     public function findAdminFormParentChoices($parentId, $object)
     {

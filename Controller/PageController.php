@@ -20,12 +20,14 @@ class PageController extends Controller
 
         $em = $this->container->get('doctrine.orm.entity_manager');
         $repo = $em->getRepository($this->container->getParameter('msi_cms.page.class'));
-        $parameters['page'] = $repo->findCmsPage($site, $slug, $locale);
+        $page = $repo->findCmsPage($site, $slug, $locale);
 
-        if (!$parameters['page']) {
+        if (!$page) {
             throw $this->createNotFoundException();
         }
 
-        return $parameters;
+        return [
+            'page' => $page,
+        ];
     }
 }

@@ -20,7 +20,7 @@ class MenuNodeAdmin extends Admin
     public function configure()
     {
         $this->options = [
-            'index_template' => 'MsiCmsBundle:MenuNode:index.html.twig',
+            'template_index' => 'MsiCmsBundle:MenuNode:index.html.twig',
             'controller' => 'MsiAdminBundle:Admin/MenuNode:',
             'form_template' => 'MsiCmsBundle:MenuNode:form.html.twig',
             'order_by' => [],

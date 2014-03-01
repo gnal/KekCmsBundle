@@ -3,7 +3,7 @@
 namespace Msi\CmsBundle\Admin;
 
 use Msi\AdminBundle\Admin\Admin;
-use Msi\AdminBundle\Grid\GridBuilder;
+use Msi\AdminBundle\Grid\Grid;
 use Symfony\Component\Form\FormBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -27,7 +27,7 @@ class MenuRootAdmin extends Admin
         $this->addChild($this->container->get('msi_cms_menu_node_admin'));
     }
 
-    public function buildGrid(GridBuilder $builder)
+    public function buildGrid(Grid $builder)
     {
         $builder
             ->add('published', 'boolean')

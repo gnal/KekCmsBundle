@@ -3,7 +3,7 @@
 namespace Msi\CmsBundle\Admin;
 
 use Msi\AdminBundle\Admin\Admin;
-use Msi\AdminBundle\Grid\GridBuilder;
+use Msi\AdminBundle\Grid\Grid;
 use Symfony\Component\Form\FormBuilder;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -26,9 +26,9 @@ class BlockAdmin extends Admin
         $this->class = $this->container->getParameter('msi_cms.block.class');
     }
 
-    public function buildGrid(GridBuilder $builder)
+    public function buildGrid(Grid $grid)
     {
-        $builder
+        $grid
             ->add('name')
             ->add('type')
         ;

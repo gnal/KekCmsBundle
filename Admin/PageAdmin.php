@@ -3,7 +3,7 @@
 namespace Msi\CmsBundle\Admin;
 
 use Msi\AdminBundle\Admin\Admin;
-use Msi\AdminBundle\Grid\GridBuilder;
+use Msi\AdminBundle\Grid\Grid;
 use Symfony\Component\Form\FormBuilder;
 use Doctrine\ORM\QueryBuilder;
 use JMS\DiExtraBundle\Annotation as DI;
@@ -25,7 +25,7 @@ class PageAdmin extends Admin
         $this->class = $this->container->getParameter('msi_cms.page.class');
     }
 
-    public function buildGrid(GridBuilder $builder)
+    public function buildGrid(Grid $builder)
     {
         $builder
             ->add('published', 'boolean')

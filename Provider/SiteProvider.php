@@ -3,7 +3,6 @@
 namespace Msi\CmsBundle\Provider;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -11,20 +10,20 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class SiteProvider
 {
-    private $request;
+    private $requestStack;
     private $siteManager;
 
     private $site;
 
     /**
      * @DI\InjectParams({
-     *     "request" = @DI\Inject("request", strict = false),
+     *     "requestStack" = @DI\Inject("request_stack"),
      *     "siteManager" = @DI\Inject("msi_cms.site_manager")
      * })
      */
-    public function __construct(Request $request, $siteManager)
+    public function __construct($requestStack, $siteManager)
     {
-        $this->request = $request;
+        $this->requestStack = $requestStack;
         $this->siteManager = $siteManager;
     }
 
@@ -33,7 +32,7 @@ class SiteProvider
         $repo = $this->siteManager->getRepository();
 
         if (!$this->site) {
-            $site = $repo->findOneBy(['host' => $this->request->getHost()]);
+            $site = $repo->findOneBy(['host' => $this->requestStack->getCurrentRequest()->getHost()]);
             // if no site, try to fetch one with isDefault true, otherwise throw 404
             if (!$site) {
                 $site = $this->siteManager->getRepository()->findBy(['isDefault' => true]);
@@ -59,6 +58,6 @@ class SiteProvider
 
     public function getWorkingLocale()
     {
-        return $this->request->getSession()->get('working_locale', $this->getSite()->getLocale());
+        return $this->requestStack->getCurrentRequest()->getSession()->get('working_locale', $this->getSite()->getLocale());
     }
 }

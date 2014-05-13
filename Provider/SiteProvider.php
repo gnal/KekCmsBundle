@@ -56,6 +56,7 @@ class SiteProvider
         return count($sites);
     }
 
+    // not sure why this is here
     public function getWorkingLocale()
     {
         return $this->requestStack->getCurrentRequest()->getSession()->get('working_locale', $this->getSite()->getLocale());

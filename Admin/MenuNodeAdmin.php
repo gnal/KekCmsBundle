@@ -41,9 +41,9 @@ class MenuNodeAdmin extends Admin
 
     public function buildForm(FormBuilder $builder)
     {
-        $parentId = $this->container->get('request')->query->get('parentId');
+        $parent = $this->container->get('request')->query->get('parent');
 
-        $parentChoices = $this->getRepository()->findAdminFormParentChoices($parentId, $this->getObject());
+        $parentChoices = $this->getRepository()->findAdminFormParentChoices($parent, $this->getObject());
 
         $builder
             ->add('page', 'entity', [

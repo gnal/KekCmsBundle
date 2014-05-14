@@ -32,6 +32,19 @@ class PageUpdateListener
      */
     public function onObjectCreateSuccess(ObjectEvent $event)
     {
+        $this->setDefaultValues($event);
+    }
+
+    /**
+     * @DI\Observe(MsiAdminEvents::OBJECT_UPDATE_SUCCESS)
+     */
+    public function onObjectUpdateSuccess(ObjectEvent $event)
+    {
+        $this->setDefaultValues($event);
+    }
+
+    private function setDefaultValues($event)
+    {
         $object = $event->getObject();
 
         $class = $this->pageManager->getClass();
@@ -44,7 +57,7 @@ class PageUpdateListener
         }
 
         // most often theres only one layout so we just remove the input from the form and set it here
-        if ($object->getTemplate() === null) {
+        if (count($this->pageManager->getLayouts()) <= 1) {
             $object->setTemplate(array_keys($this->pageManager->getLayouts())[0]);
         }
     }

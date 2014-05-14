@@ -33,6 +33,7 @@ class PageAdmin extends Admin
         ;
 
         if ($this->getUser()->isSuperAdmin()) {
+            $builder->add('slug');
             $builder->add('route');
         }
     }

@@ -53,7 +53,7 @@ class SiteProvider
         // should make a count method in custom repo instead of that ;)
         $sites = $this->siteManager->getRepository()->findAll();
 
-        return count($sites);
+        return count($sites) > 1;
     }
 
     // not sure why this is here

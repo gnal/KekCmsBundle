@@ -34,7 +34,7 @@ class MenuNodeAdmin extends Admin
     {
         $builder
             ->add('published', 'boolean')
-            ->add('name', 'text')
+            ->add('name', 'tree')
         ;
     }
 
@@ -87,10 +87,10 @@ class MenuNodeAdmin extends Admin
     public function configureAdminFindAllQuery(QueryBuilder $qb)
     {
         // $qb->resetDQLPart('where');
-        $qb
-            ->andWhere('a.menu = :parent')
-            ->setParameter('parent', $this->getParentObject())
-        ;
+        // $qb
+        //     ->andWhere('a.menu = :parent')
+        //     ->setParameter('parent', $this->getParentObject())
+        // ;
         $qb->andWhere('a.lvl != 0');
         $qb->addOrderBy('a.lft', 'ASC');
     }

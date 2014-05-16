@@ -87,19 +87,21 @@ class MenuNodeAdmin extends Admin
     public function configureAdminFindAllQuery(QueryBuilder $qb)
     {
         // $qb->resetDQLPart('where');
-        // $qb
-        //     ->andWhere('a.menu = :parent')
-        //     ->setParameter('parent', $this->getParentObject())
-        // ;
+        $qb
+            ->andWhere('a.menu = :parent')
+            ->setParameter('parent', $this->getParentObject())
+        ;
         $qb->andWhere('a.lvl != 0');
         $qb->addOrderBy('a.lft', 'ASC');
     }
 
+    // these methods are not called anymore, use listener instead >:)
     public function prePersist($entity)
     {
         $this->validateRoute($entity);
     }
 
+    // these methods are not called anymore, use listener instead >:)
     public function preUpdate($entity)
     {
         $this->validateRoute($entity);
@@ -110,6 +112,7 @@ class MenuNodeAdmin extends Admin
         $this->container->get('msi_admin.bouncer')->operatorFilter($collection);
     }
 
+    // need to make a listener for that
     public function validateRoute($entity)
     {
         if (!preg_match('#^@#', $entity->getTranslation()->getRoute())) {

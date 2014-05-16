@@ -1,8 +1,8 @@
 {% extends 'MsiAdminBundle:Admin:index.html.twig' %}
 
 {% block sidebar %}
-<ul id="sortable1" class="list-group" data-url="{{ admin.genUrl('sort') }}">
-    {% for item in admin.grid.rows %}
+<ul id="sortable1" class="list-group" data-url="{{ path('msi_cms_menunode_sort') }}">
+    {% for item in pager.getIterator().getArrayCopy() %}
         {% set l = loop.index %}
         <li class="list-group-item" id="{{ item.id }}" data-lvl="{{ item.lvl }}" data-lft="{{ item.lft }}" data-rgt="{{ item.rgt }}">
             {% for i in 0..item.lvl %}

@@ -2,24 +2,29 @@
 
 namespace Msi\CmsBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class MenuNodeController
+use Symfony\Component\HttpFoundation\Response;
+
+class MenuNodeController extends Controller
 {
-    public function sortAction(Request $request)
+    /**
+     * @Route("/admin/menu-node/sortz")
+     */
+    public function sortAction()
     {
-        $id = $request->query->get('id');
-        $node = $this->admin->getObjectManager()->getFindByQueryBuilder(
-            ['a.id' => $request->query->get('id')]
-        )->getQuery()->getOneOrNullResult();
+        $id = $this->getRequest()->query->get('id');
+        $node = $this->get('msi_cms_menu_node_admin')->getRepository()->find($this->getRequest()->query->get('id'));
 
-        foreach ($request->query->get('array1') as $k => $v) {
+        foreach ($this->getRequest()->query->get('array1') as $k => $v) {
             if ($v == $id) {
                 $start = $k;
             }
         }
 
-        foreach ($request->query->get('array2') as $k => $v) {
+        foreach ($this->getRequest()->query->get('array2') as $k => $v) {
             if ($v == $id) {
                 $end = $k;
             }
@@ -28,11 +33,12 @@ class MenuNodeController
         $number = $start - $end;
 
         if ($number > 0) {
-            $this->admin->getObjectManager()->moveUp($node, abs($number));
+            $this->get('msi_cms_menu_node_admin')->getRepository()->moveUp($node, abs($number));
         } elseif ($number < 0) {
-            $this->admin->getObjectManager()->moveDown($node, abs($number));
+            $this->get('msi_cms_menu_node_admin')->getRepository()->moveDown($node, abs($number));
         }
 
-        return $this->redirect($this->admin->genUrl('list'));
+        // return $this->redirect($this->get('msi_cms_menu_node_admin')->generateUrl('index'));
+        return new Response();
     }
 }

@@ -21,7 +21,6 @@ class MenuNodeAdmin extends Admin
     {
         $this->options = [
             'template_index' => 'MsiCmsBundle:MenuNode:index.html.twig',
-            'controller' => 'MsiAdminBundle:Admin/MenuNode:',
             'form_template' => 'MsiCmsBundle:MenuNode:form.html.twig',
             'order_by' => [],
             'search_fields' => ['a.id', 'translations.name'],
@@ -35,7 +34,7 @@ class MenuNodeAdmin extends Admin
     {
         $builder
             ->add('published', 'boolean')
-            ->add('name', 'tree')
+            ->add('name', 'text')
         ;
     }
 

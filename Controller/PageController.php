@@ -10,6 +10,7 @@ class PageController extends Controller
 {
     /**
      * @Template()
+     * @Route("/{_locale}/{slug}", defaults={"slug" = "~"}, requirements={"_locale" = "en|fr"})
      */
     public function showAction()
     {

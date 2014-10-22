@@ -52,12 +52,23 @@ class PageUpdateListener
             return;
         }
 
+        // set default site
+
+        if (!$this->provider->hasAtLeastOneSite()) {
+            die('you need to create at least one site to do that');
+        }
+
         if (!$this->provider->hasManySites()) {
             $object->setSite($this->provider->getSite());
         }
 
-        // most often theres only one layout so we just remove the input from the form and set it here
-        if (count($this->pageManager->getLayouts()) <= 1) {
+        // set default layout
+
+        if (count($this->pageManager->getLayouts()) === 0) {
+            die('the config node "page_layouts" requires at least one element.');
+        }
+
+        if (count($this->pageManager->getLayouts()) === 1) {
             $object->setTemplate(array_keys($this->pageManager->getLayouts())[0]);
         }
     }

@@ -37,7 +37,7 @@ class SiteProvider
             if (!$site) {
                 $site = $this->siteManager->getRepository()->findBy(['isDefault' => true]);
                 if (!isset($site[0])) {
-                    throw new NotFoundHttpException('No site was found.');
+                    return new \Msi\CmsBundle\Entity\Site;
                 }
                 $site = $site[0];
             }
@@ -46,6 +46,14 @@ class SiteProvider
         }
 
         return $this->site;
+    }
+
+    public function hasAtLeastOneSite()
+    {
+        // should make a count method in custom repo instead of that ;)
+        $sites = $this->siteManager->getRepository()->findAll();
+
+        return count($sites) > 0;
     }
 
     public function hasManySites()

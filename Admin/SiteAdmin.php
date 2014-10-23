@@ -58,6 +58,8 @@ class SiteAdmin extends Admin
                 'label' => 'Available languages',
 
             ])
+            ->add('css', 'textarea')
+            ->add('js', 'textarea')
         ;
     }
 

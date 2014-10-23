@@ -3,7 +3,6 @@
 namespace Msi\CmsBundle\Provider;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @DI\Service("msi_cms.site_provider")

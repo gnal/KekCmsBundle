@@ -1,52 +1,48 @@
-{% extends 'MsiCmsBundle::base.html.twig' %}
+{% extends '::base.html.twig' %}
 
-{% block meta_description %}
-{% spaceless %}
-{% if page.translation.metaDescription %}
-    {{ page.translation.metaDescription }}
-{% else %}
-    {{ site.translation.metaDescription }}
-{% endif %}
-{% endspaceless %}
-{% endblock %}
+{% block meta_description -%}
+    {% if page.translation.metaDescription %}
+        {{- page.translation.metaDescription -}}
+    {% else %}
+        {{- site.translation.metaDescription -}}
+    {% endif %}
+{%- endblock %}
 
-{% block meta_title %}
-{% spaceless %}
-{% if page.translation.metaTitle %}
-    {{ page.translation.metaTitle }}
-{% else %}
-    {{ block('title') }}
-{% endif %}
-{% endspaceless %}
-{% endblock %}
+{% block meta_title -%}
+    {% if page.translation.metaTitle %}
+        {{- page.translation.metaTitle -}}
+    {% else %}
+        {{- block('title') -}}
+    {% endif %}
+{%- endblock %}
 
-{% block brand %}
-{{ site.translation.brand|raw }}
-{% endblock %}
+{% block brand -%}
+    {{ site.translation.brand|raw }}
+{%- endblock %}
 
-{% block title %}
-{{ page.translation.title }}
-{% endblock %}
+{% block title -%}
+    {{ page.translation.title|raw }}
+{%- endblock %}
 
-{% block css %}
-{{ page.css|raw }}
-{% endblock css %}
+{% block css -%}
+    {{- site.css|raw -}}
+    {{- page.css|raw -}}
+{%- endblock %}
 
-{% block js %}
-{{ page.js|raw }}
-{% endblock js %}
+{% block js -%}
+    {{ site.js|raw }}
+    {{ page.js|raw }}
+{%- endblock %}
 
 {% block flash %}
-{% spaceless %}
-{% for flashMessage in app.session.flashbag.get('success') %}
-    <div class="alert alert-success fade in">
-        <i class="icon-large icon-ok-sign"></i> <span>{{ flashMessage }}</span>
-    </div>
-{% endfor %}
-{% for flashMessage in app.session.flashbag.get('error') %}
-    <div class="alert alert-danger fade in">
-        <i class="icon-large icon-exclamation-sign"></i> <span>{{ flashMessage }}</span>
-    </div>
-{% endfor %}
-{% endspaceless %}
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success fade in">
+            <i class="icon-large icon-ok-sign"></i> <span>{{ flashMessage }}</span>
+        </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger fade in">
+            <i class="icon-large icon-exclamation-sign"></i> <span>{{ flashMessage }}</span>
+        </div>
+    {% endfor %}
 {% endblock %}

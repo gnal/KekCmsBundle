@@ -32,10 +32,44 @@ abstract class Site
      */
     protected $locales;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $css;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $js;
+
     public function __construct()
     {
         $this->translations = new ArrayCollection();
         $this->isDefault = false;
+    }
+
+    public function getCss()
+    {
+        return $this->css;
+    }
+
+    public function setCss($css)
+    {
+        $this->css = $css;
+
+        return $this;
+    }
+
+    public function getJs()
+    {
+        return $this->js;
+    }
+
+    public function setJs($js)
+    {
+        $this->js = $js;
+
+        return $this;
     }
 
     public function getIsDefault()

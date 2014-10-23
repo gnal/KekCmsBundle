@@ -28,6 +28,7 @@ class Configuration implements ConfigurationInterface
         $this->addPageSection($rootNode);
         $this->addBlockSection($rootNode);
         $this->addAdminSection($rootNode);
+        $this->addConfigSection($rootNode);
 
         return $treeBuilder;
     }
@@ -38,6 +39,17 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('site_class')
                     ->defaultValue('Msi\CmsBundle\Entity\Site')
+                    ->cannotBeEmpty()
+                ->end()
+            ->end();
+    }
+
+    private function addConfigSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->scalarNode('config_class')
+                    ->defaultValue('Msi\CmsBundle\Entity\Config')
                     ->cannotBeEmpty()
                 ->end()
             ->end();

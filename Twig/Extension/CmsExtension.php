@@ -30,6 +30,9 @@ class CmsExtension extends \Twig_Extension
         $site = $this->container->get('msi_cms.site_provider')->getSite();
         $globals['site'] = $site;
 
+        $config = $this->container->get('msi_cms.config_provider')->getConfig();
+        $globals['config'] = $config;
+
         $globals['is_multisite'] = $this->container->get('msi_cms.site_provider')->hasManySites();
         $globals['tiny_mce_template'] = $this->container->getParameter('msi_admin.tiny_mce');
 

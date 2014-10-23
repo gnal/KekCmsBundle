@@ -4,6 +4,7 @@
     <li class="active"><a href="#tab1" data-toggle="tab">{{ 'Content'|trans }}</a></li>
     <li><a href="#tab2" data-toggle="tab">{{ 'Settings'|trans }}</a></li>
     <li><a href="#tab3" data-toggle="tab">{{ 'SEO'|trans }}</a></li>
+    <li><a href="#tab4" data-toggle="tab">{{ 'Admin'|trans }}</a></li>
 </ul>
 
 {{ form_errors(form) }}
@@ -17,20 +18,23 @@
     </div>
 
     <div class="tab-pane fade" id="tab2">
-        <fieldset>
-            {% for translation in form.translations %}
-                {{ form_row(translation.published) }}
-            {% endfor %}
-            {{ form_row(form.isDefault) }}
-            {{ form_row(form.locale) }}
-            {{ form_row(form.locales) }}
-        </fieldset>
+        {% for translation in form.translations %}
+            {{ form_row(translation.published) }}
+        {% endfor %}
+        {{ form_row(form.isDefault) }}
+        {{ form_row(form.locale) }}
+        {{ form_row(form.locales) }}
     </div>
 
     <div class="tab-pane fade" id="tab3">
         {% for translation in form.translations %}
             {{ form_row(translation.metaDescription) }}
         {% endfor %}
+    </div>
+
+    <div class="tab-pane fade" id="tab4">
+        {{ form_row(form.css) }}
+        {{ form_row(form.js) }}
     </div>
 </div>
 

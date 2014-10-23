@@ -14,7 +14,6 @@
             {{ form_row(translation.published) }}
         {% endfor %}
         {% if is_multisite %}{{ form_row(form.site) }}{% endif %}
-        {{ form_row(form.showTitle) }}
         {% if form.template is defined %}
             {{ form_row(form.template) }}
         {% endif %}

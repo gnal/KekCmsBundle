@@ -80,12 +80,7 @@ class PageAdmin extends Admin
             ;
         }
 
-        $builder->add('showTitle');
-
         if ($this->container->get('msi_cms.site_provider')->hasManySites()) {
-            // $builder->add('site', 'entity', [
-            //     'class' => $this->container->getParameter('msi_cms.site.class'),
-            // ]);
             $builder->add('site');
         }
     }

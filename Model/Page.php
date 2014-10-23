@@ -40,11 +40,6 @@ abstract class Page
      */
     protected $route;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $showTitle;
-
     protected $blocks;
 
     protected $site;
@@ -55,7 +50,6 @@ abstract class Page
 
     public function __construct()
     {
-        $this->showTitle = true;
         $this->blocks = new ArrayCollection();
         $this->translations = new ArrayCollection();
         $this->children = new ArrayCollection;
@@ -69,18 +63,6 @@ abstract class Page
     public function setChildren($children)
     {
         $this->children = $children;
-
-        return $this;
-    }
-
-    public function getShowTitle()
-    {
-        return $this->showTitle;
-    }
-
-    public function setShowTitle($showTitle)
-    {
-        $this->showTitle = $showTitle;
 
         return $this;
     }

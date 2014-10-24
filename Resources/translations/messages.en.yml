@@ -9,3 +9,12 @@ availablevars_data_help: "Variables that you can use in the content. How to use:
 Offlinemessage: Offline Message
 
 Uniquename: Unique Name
+
+entity:
+    Menu: menu|menus
+    MenuRoot: menu|menus
+    MenuNode: item|items
+    Page: page|pages
+    Block: block|blocks
+    Site: site|sites
+    Email: email|emails

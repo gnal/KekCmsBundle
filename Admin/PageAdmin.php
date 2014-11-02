@@ -3,6 +3,7 @@
 namespace Msi\CmsBundle\Admin;
 
 use Msi\AdminBundle\Admin\Admin;
+use Msi\AdminBundle\Admin\AdminConfig;
 use Msi\AdminBundle\Grid\Grid;
 use Symfony\Component\Form\FormBuilder;
 use Doctrine\ORM\QueryBuilder;
@@ -14,15 +15,14 @@ use JMS\DiExtraBundle\Annotation as DI;
  */
 class PageAdmin extends Admin
 {
-    public function configure()
+    public function buildConfig(AdminConfig $config)
     {
-        $this->options = [
-            'form_template' => 'MsiCmsBundle:Page:form.html.twig',
-            'search_fields' => ['a.id', 'a.route', 'translations.title'],
-            'order_by'      => ['translations.title' => 'ASC'],
-        ];
-
-        $this->class = $this->container->getParameter('msi_cms.page.class');
+        $config->setDataClass($this->container->getParameter('msi_cms.page.class'));
+        $config
+            ->addOption('form_template', 'MsiCmsBundle:Page:form.html.twig')
+            ->addOption('search_fields', ['a.id', 'a.route', 'translations.title'])
+            ->addOption('order_by', ['translations.title' => 'ASC'])
+        ;
     }
 
     public function buildGrid(Grid $builder)

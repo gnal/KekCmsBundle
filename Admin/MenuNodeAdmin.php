@@ -3,6 +3,7 @@
 namespace Msi\CmsBundle\Admin;
 
 use Msi\AdminBundle\Admin\Admin;
+use Msi\AdminBundle\Admin\AdminConfig;
 use Msi\AdminBundle\Grid\Grid;
 use Symfony\Component\Form\FormBuilder;
 use Doctrine\ORM\QueryBuilder;
@@ -17,17 +18,15 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class MenuNodeAdmin extends Admin
 {
-    public function configure()
+    public function buildConfig(AdminConfig $config)
     {
-        $this->options = [
-            'template_index' => 'MsiCmsBundle:MenuNode:index.html.twig',
-            'form_template' => 'MsiCmsBundle:MenuNode:form.html.twig',
-            'order_by' => [],
-            'search_fields' => ['a.id', 'translations.name'],
-        ];
-
-        $this->class = $this->container->getParameter('msi_cms.menu.class');
-        $this->setParent($this->container->get('msi_cms_menu_root_admin'));
+        $config->setDataClass($this->container->getParameter('msi_cms.menu.class'));
+        $config->setParent($this->container->get('msi_cms_menu_root_admin'));
+        $config
+            ->addOption('template_index', 'MsiCmsBundle:MenuNode:index.html.twig')
+            ->addOption('form_template', 'MsiCmsBundle:MenuNode:form.html.twig')
+            ->addOption('search_fields', ['a.id', 'translations.name'])
+        ;
     }
 
     public function buildGrid(Grid $builder)

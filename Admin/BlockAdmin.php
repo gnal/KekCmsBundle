@@ -3,6 +3,7 @@
 namespace Msi\CmsBundle\Admin;
 
 use Msi\AdminBundle\Admin\Admin;
+use Msi\AdminBundle\Admin\AdminConfig;
 use Msi\AdminBundle\Grid\Grid;
 use Symfony\Component\Form\FormBuilder;
 use Doctrine\ORM\EntityRepository;
@@ -16,14 +17,14 @@ use JMS\DiExtraBundle\Annotation as DI;
  */
 class BlockAdmin extends Admin
 {
-    public function configure()
+    public function buildConfig(AdminConfig $config)
     {
-        $this->options = [
-            'search_fields' => ['a.id', 'a.type', 'a.name', 'a.slot'],
-            'form_template' => 'MsiCmsBundle:Block:form.html.twig',
-        ];
-
-        $this->class = $this->container->getParameter('msi_cms.block.class');
+        $config->setDataClass($this->container->getParameter('msi_cms.block.class'));
+        $config
+            ->addOption('form_template', 'MsiCmsBundle:Block:form.html.twig')
+            ->addOption('search_fields', ['a.id', 'a.type', 'a.name', 'a.slot'])
+            ->addOption('order_by', ['a.name' => 'ASC'])
+        ;
     }
 
     public function buildGrid(Grid $grid)

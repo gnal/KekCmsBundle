@@ -3,6 +3,7 @@
 namespace Msi\CmsBundle\Admin;
 
 use Msi\AdminBundle\Admin\Admin;
+use Msi\AdminBundle\Admin\AdminConfig;
 use Msi\AdminBundle\Grid\Grid;
 use Symfony\Component\Form\FormBuilder;
 use JMS\DiExtraBundle\Annotation as DI;
@@ -13,6 +14,10 @@ use JMS\DiExtraBundle\Annotation as DI;
  */
 class ConfigAdmin extends Admin
 {
+    public function buildConfig(AdminConfig $config)
+    {
+    }
+
     public function configure()
     {
         $this->class = $this->container->getParameter('msi_cms.config.class');

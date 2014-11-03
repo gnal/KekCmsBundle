@@ -5,8 +5,12 @@ namespace Msi\CmsBundle\Model;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * @ORM\MappedSuperclass
+ * @UniqueEntity("host")
  */
 abstract class Site
 {
@@ -14,6 +18,8 @@ abstract class Site
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     * @Assert\Regex("/^([a-z0-9]{1}[a-z0-9-]+\.)+[a-z]+$/")
      */
     protected $host;
 

@@ -16,11 +16,7 @@ class ConfigAdmin extends Admin
 {
     public function buildConfig(AdminConfig $config)
     {
-    }
-
-    public function configure()
-    {
-        $this->class = $this->container->getParameter('msi_cms.config.class');
+        $config->setDataClass($this->container->getParameter('msi_cms.config.class'));
     }
 
     public function buildGrid(Grid $builder)

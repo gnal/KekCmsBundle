@@ -8,13 +8,6 @@ Msi\CmsBundle\Entity\PageTranslation:
         title:
             - NotBlank: ~
 
-Msi\CmsBundle\Entity\Site:
-    constraints:
-        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: host
-    properties:
-        host:
-            - NotBlank: ~
-
 Msi\CmsBundle\Entity\Block:
     properties:
         name:

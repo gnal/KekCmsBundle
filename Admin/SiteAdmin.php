@@ -16,16 +16,9 @@ class SiteAdmin extends Admin
 {
     public function buildConfig(AdminConfig $config)
     {
-    }
-
-    public function configure()
-    {
-        $this->options = [
-            'form_template' => 'MsiCmsBundle:Site:form.html.twig',
-            'search_fields' => ['a.id', 'a.host', 'translations.brand'],
-        ];
-
-        $this->class = $this->container->getParameter('msi_cms.site.class');
+        $config->setDataClass($this->container->getParameter('msi_cms.site.class'));
+        $config->addOption('form_template', 'MsiCmsBundle:Site:form.html.twig');
+        $config->addOption('search_fields', ['a.id', 'a.host', 'translations.brand']);
     }
 
     public function buildGrid(Grid $builder)

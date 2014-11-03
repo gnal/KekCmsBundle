@@ -19,6 +19,19 @@ class CrudControllerTest extends WebTestCase
         $this->baseCrudTest('page', $input1, $input2, 'Test', 'Foo');
     }
 
+    public function testSiteCrud()
+    {
+        $input1 = [
+            'form[host]' => 'text.com',
+        ];
+
+        $input2 = [
+            'form[host]' => 'foo.com',
+        ];
+
+        $this->baseCrudTest('site', $input1, $input2, 'text.com', 'foo.com');
+    }
+
     public function testUserCrud()
     {
         $input1 = [
@@ -34,6 +47,19 @@ class CrudControllerTest extends WebTestCase
         ];
 
         $this->baseCrudTest('user', $input1, $input2, 'test@test.test', 'foo@foo.foo');
+    }
+
+    public function testGroupCrud()
+    {
+        $input1 = [
+            'form[name]' => 'Test',
+        ];
+
+        $input2 = [
+            'form[name]' => 'Foo',
+        ];
+
+        $this->baseCrudTest('group', $input1, $input2, 'Test', 'Foo');
     }
 
     private function baseCrudTest($path, $input1, $input2, $name1, $name2)

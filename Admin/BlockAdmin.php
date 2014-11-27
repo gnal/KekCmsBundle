@@ -31,6 +31,7 @@ class BlockAdmin extends Admin
     {
         $grid
             ->add('published', 'boolean')
+            ->add('showOnAllPages', 'boolean')
             ->add('name')
         ;
     }
@@ -74,6 +75,8 @@ class BlockAdmin extends Admin
             }
 
             $builder->add('slot', 'choice', ['choices' => $this->container->getParameter('msi_cms.block.slots')]);
+
+            $builder->add('showOnAllPages', 'checkbox');
         } else {
             $types = [];
             foreach ($this->container->getServiceIds() as $id) {

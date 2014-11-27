@@ -36,6 +36,11 @@ abstract class Block
      */
     protected $settings;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $showOnAllPages;
+
     protected $rendered;
 
     protected $pages;
@@ -45,10 +50,23 @@ abstract class Block
     public function __construct()
     {
         $this->rendered = false;
+        $this->showOnAllPages = false;
         $this->settings = [];
         $this->pages = new ArrayCollection();
         $this->translations = new ArrayCollection();
         $this->operators = new ArrayCollection();
+    }
+
+    public function getShowOnAllPages()
+    {
+        return $this->showOnAllPages;
+    }
+
+    public function setShowOnAllPages($showOnAllPages)
+    {
+        $this->showOnAllPages = $showOnAllPages;
+
+        return $this;
     }
 
     public function getRendered()

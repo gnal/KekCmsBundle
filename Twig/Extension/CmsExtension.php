@@ -50,22 +50,37 @@ class CmsExtension extends \Twig_Extension
     public function renderBlock($slot, $page)
     {
         $content = '';
+
         foreach ($page->getBlocks() as $block) {
-            if ($block->getRendered() === true) {
-                continue;
-            }
-            if (!$block->getTranslation()->getPublished()) {
-                continue;
-            }
-            if ($block->getSlot() !== $slot) {
-                continue;
-            }
-            $handler = $this->container->get($block->getType());
-            $content .= $handler->execute($block, $page);
-            $block->setRendered(true);
+           $content .= $this->resolveBlock($block, $slot, $page);
+        }
+
+        foreach ($this->container->get('msi_cms.block_provider')->getAllPagesBlocks() as $block) {
+           $content .= $this->resolveBlock($block, $slot, $page);
         }
 
         return $content;
+    }
+
+    private function resolveBlock($block, $slot, $page)
+    {
+        if ($block->getRendered() === true) {
+            return;
+        }
+
+        if (!$block->getTranslation()->getPublished()) {
+            return;
+        }
+
+        if ($block->getSlot() !== $slot) {
+            return;
+        }
+
+        $blockType = $this->container->get($block->getType());
+
+        $block->setRendered(true);
+
+        return $blockType->execute($block, $page);
     }
 
     public function getName()

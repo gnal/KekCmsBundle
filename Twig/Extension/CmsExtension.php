@@ -24,7 +24,7 @@ class CmsExtension extends \Twig_Extension
         if (!$this->container->isScopeActive('request')) {
             return $globals;
         }
-        $request = $this->container->get('request');
+        $request = $this->container->get('request_stack')->getCurrentRequest();
         $workingLocale = $this->container->get('msi_cms.site_provider')->getWorkingLocale();
 
         $site = $this->container->get('msi_cms.site_provider')->getSite();
@@ -37,11 +37,13 @@ class CmsExtension extends \Twig_Extension
         $globals['tiny_mce_template'] = $this->container->getParameter('msi_admin.tiny_mce');
 
         $pageClass = $this->container->getParameter('msi_cms.page.class');
-        $page = $this->container->get('doctrine')->getRepository($pageClass)->findByRoute($request->attributes->get('_route'));
+        $page = $this->container->get('doctrine')->getRepository($pageClass)->findCmsPage($site, null, $request->getLocale(), $request->attributes->get('_route'));
+
         if (!$page) {
             $page = new $pageClass();
             $page->createTranslation($workingLocale);
         }
+
         $globals['page'] = $page;
 
         return $globals;

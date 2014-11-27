@@ -42,15 +42,12 @@ class PageAdmin extends Admin
     {
         if ($this->getUser()->isSuperAdmin()) {
             $collection = $this->container->get('router')->getRouteCollection();
-            $choices = [];
+            $routeChoices = [];
             foreach ($collection->all() as $name => $route) {
                 if (preg_match('#^_#', $name)) {
                     continue;
                 }
-                if (preg_match('#^msi_page_#', $name)) {
-                    continue;
-                }
-                $choices[$name] = $name;
+                $routeChoices[$name] = $name;
             }
 
             $parentChoices = $this->getRepository()->findAdminFormParentChoices($this->getObject()->getId());
@@ -62,21 +59,15 @@ class PageAdmin extends Admin
             $builder
                 ->add('route', 'choice', [
                     'required' => false,
-                    'empty_value' => '',
-                    'choices' => $choices,
+                    'choices' => $routeChoices,
                 ])
                 ->add('css', 'textarea')
                 ->add('js', 'textarea')
                 ->add('parent', 'entity', [
-                    'empty_value' => '',
                     'required' => false,
                     'class' => $this->container->getParameter('msi_cms.page.class'),
                     'choices' => $parentChoices,
                 ])
-                // ->add('blocks', 'collection', [
-                //     'type' => new \Msi\AdminBundle\Form\Type\BlockType($this->container),
-                //     'allow_add' => true,
-                // ])
             ;
         }
 

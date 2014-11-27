@@ -11,15 +11,14 @@ class PageRepository extends EntityRepository
         $qb = $this->createQueryBuilder('a');
 
         $qb
-            ->leftJoin('a.translations', 'translations')
-            ->leftJoin('a.blocks', 'blocks')
-            ->leftJoin('blocks.translations', 'blocks_translations')
-
-            ->andWhere($qb->expr()->eq('translations.published', ':published'))
-            ->setParameter('published', true)
+            ->join('a.translations', 'translations')
+            ->join('a.blocks', 'blocks')
 
             ->andWhere($qb->expr()->eq('a.site', ':site'))
             ->setParameter('site', $site)
+
+            ->andWhere($qb->expr()->eq('translations.published', ':published'))
+            ->setParameter('published', true)
 
             ->andWhere($qb->expr()->eq('translations.locale', ':locale'))
             ->setParameter('locale', $locale)
@@ -40,9 +39,8 @@ class PageRepository extends EntityRepository
         $qb = $this->createQueryBuilder('a');
 
         $qb
-            ->leftJoin('a.translations', 'translations')
-            ->leftJoin('a.blocks', 'blocks')
-            ->leftJoin('blocks.translations', 'blocks_translations')
+            ->join('a.translations', 'translations')
+            ->join('a.blocks', 'blocks')
 
             ->andWhere($qb->expr()->eq('translations.published', ':published'))
             ->setParameter('published', true)
@@ -53,9 +51,7 @@ class PageRepository extends EntityRepository
             ->addOrderBy('blocks.position', 'ASC')
         ;
 
-        $page = $qb->getQuery()->execute();
-
-        return isset($page[0]) ? $page[0] : null;
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     public function findAdminFormParentChoices($id)

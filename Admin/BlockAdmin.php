@@ -30,8 +30,8 @@ class BlockAdmin extends Admin
     public function buildGrid(Grid $grid)
     {
         $grid
+            ->add('published', 'boolean')
             ->add('name')
-            ->add('type')
         ;
     }
 

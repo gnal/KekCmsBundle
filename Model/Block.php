@@ -21,13 +21,13 @@ abstract class Block
     protected $type;
 
     /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $slot;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -45,7 +45,7 @@ abstract class Block
     public function __construct()
     {
         $this->rendered = false;
-        $this->settings = array();
+        $this->settings = [];
         $this->pages = new ArrayCollection();
         $this->translations = new ArrayCollection();
         $this->operators = new ArrayCollection();

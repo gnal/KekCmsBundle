@@ -37,78 +37,69 @@ class BlockAdmin extends Admin
 
     public function buildForm(FormBuilder $builder)
     {
+        // workflow for creating blocks:
+        // 1. choose type of block you want to create, text, menu, action, etc
+        // 2. once the type has been chosen, it cant be changed, if you fucked up, delete old block and create  a new block
+
         $builder->add('name');
 
-        if ($typeId = $this->getObject()->getType()) {
-            $blockHandler = $this->container->get($typeId);
-            $settingsBuilder = $this->container->get('form.factory')->createBuilder();
-            $blockHandler->buildForm($settingsBuilder);
-            $settingsType = (new DynamicType('block_settings'))->setBuilder($settingsBuilder);
-            if ($settingsBuilder->all()) {
-                $builder->add('settings', $settingsType);
+        if ($this->getObject()->getType()) {
+            $blockType = $this->container->get($this->getObject()->getType());
+            $settingsFormBuilder = $this->container->get('form.factory')->createBuilder();
+            $blockType->buildForm($settingsFormBuilder);
+            $settingsFormType = new DynamicType($settingsFormBuilder, 'block_settings');
+            if ($settingsFormBuilder->all()) {
+                $builder->add('settings', $settingsFormType);
             }
 
-            // $builder->add('pages', 'entity', [
-            //     'multiple' => true,
-            //     'expanded' => true,
-            //     'class' => $this->container->getParameter('msi_cms.page.class'),
-            //     'query_builder' => function(EntityRepository $er) {
-            //         return $er->createQueryBuilder('a')
-            //             ->leftJoin('a.translations', 't')
-            //             ->addSelect('t')
-            //             ->addOrderBy('t.title', 'ASC')
-            //         ;
-            //     },
-            // ]);
-        }
-
-        $builder->add('pages', 'entity', [
-            'multiple' => true,
-            'expanded' => true,
-            'class' => $this->container->getParameter('msi_cms.page.class'),
-            'query_builder' => function(EntityRepository $er) {
-                return $er->createQueryBuilder('a')
-                    ->leftJoin('a.translations', 't')
-                    ->addSelect('t')
-                    ->addOrderBy('t.title', 'ASC')
-                ;
-            },
-        ]);
-
-        $types = [];
-        foreach ($this->container->getServiceIds() as $id) {
-            if (preg_match('@^.+_.+\.block\..+$@', $id)) {
-                $types[$id] = $id;
-            }
-        }
-
-        $builder->add('type', 'choice', [
-            'choices' => $types,
-        ]);
-
-        if ($this->container->get('security.context')->getToken()->getUser()->isSuperAdmin()) {
-            $builder->add('operators', 'entity', [
-                'class' => 'MsiUserBundle:Group',
+            $builder->add('pages', 'entity', [
                 'multiple' => true,
                 'expanded' => true,
+                'class' => $this->container->getParameter('msi_cms.page.class'),
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('a')
+                        ->leftJoin('a.translations', 't')
+                        ->addSelect('t')
+                        ->addOrderBy('t.title', 'ASC')
+                    ;
+                },
+            ]);
+
+            if ($this->container->get('security.context')->getToken()->getUser()->isSuperAdmin()) {
+                $builder->add('operators', 'entity', [
+                    'class' => 'MsiUserBundle:Group',
+                    'multiple' => true,
+                    'expanded' => true,
+                ]);
+            }
+
+            $builder->add('slot', 'choice', ['choices' => $this->container->getParameter('msi_cms.block.slots')]);
+        } else {
+            $types = [];
+            foreach ($this->container->getServiceIds() as $id) {
+                if (preg_match('@^.+_.+\.block\.type\..+$@', $id)) {
+                    $types[$id] = $this->container->get($id)->getName();
+                }
+            }
+
+            $builder->add('type', 'choice', [
+                'choices' => $types,
             ]);
         }
-
-        $builder->add('slot', 'choice', ['choices' => $this->container->getParameter('msi_cms.block.slots')]);
     }
 
     public function buildTranslationForm(FormBuilder $builder)
     {
-        $builder->add('published', 'checkbox');
-
-        if ($typeId = $this->getObject()->getType()) {
-            $blockHandler = $this->container->get($typeId);
-            $settingsBuilder = $this->container->get('form.factory')->createBuilder();
-            $blockHandler->buildTranslationForm($settingsBuilder);
-            $settingsType = (new DynamicType('block_translation_settings'))->setBuilder($settingsBuilder);
-            if ($settingsBuilder->all()) {
-                $builder->add('settings', $settingsType);
+        if ($this->getObject()->getType()) {
+            $blockType = $this->container->get($this->getObject()->getType());
+            $settingsFormBuilder = $this->container->get('form.factory')->createBuilder();
+            $blockType->buildTranslationForm($settingsFormBuilder);
+            $settingsFormType = new DynamicType($settingsFormBuilder, 'block_translation_settings');
+            if ($settingsFormBuilder->all()) {
+                $builder->add('settings', $settingsFormType);
             }
+
+            $builder->add('published', 'checkbox');
         }
     }
 

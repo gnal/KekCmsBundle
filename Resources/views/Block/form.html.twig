@@ -1,5 +1,7 @@
 {% form_theme form 'MsiAdminBundle:Form:form.html.twig' %}
 
+{% if admin.object.id %}
+
 <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab">{{ 'Content'|trans }}</a></li>
     <li><a href="#tab2" data-toggle="tab">{{ 'Settings'|trans }}</a></li>
@@ -11,38 +13,49 @@
 {{ form_errors(form) }}
 <div class="tab-content">
     <div class="tab-pane fade active in" id="tab1">
-        {{ form_row(form.name) }}
-        {% if admin.object.id %}
-            {% if admin.object.type == 'msi_admin.block.text' %}
+        {% if form.settings is defined %}
+            {{ form_widget(form.settings) }}
+        {% endif %}
+        {% for translation in form.translations %}
+            {% if translation.settings is defined %}
+                {{ form_widget(translation.settings) }}
+            {% endif %}
+        {% endfor %}
+        {#{% if admin.object.type == 'msi_admin.block.text' %}
             {% for translation in form.translations %}
                 {{ form_widget(translation.settings.body) }}
             {% endfor %}
-            {% elseif admin.object.type == 'msi_admin.block.action' %}
-                {{ form_row(form.settings.action) }}
-                {{ form_row(form.settings.query) }}
-            {% elseif admin.object.type == 'msi_admin.block.template' %}
-                {{ form_row(form.settings.template) }}
-            {% elseif admin.object.type == 'msi_admin.block.menu' %}
-                {{ form_row(form.settings.menu) }}
-                {{ form_row(form.settings.class) }}
-            {% endif %}
-        {% endif %}
+        {% elseif admin.object.type == 'msi_admin.block.action' %}
+            {{ form_row(form.settings.action) }}
+            {{ form_row(form.settings.query) }}
+        {% elseif admin.object.type == 'msi_admin.block.template' %}
+            {{ form_row(form.settings.template) }}
+        {% elseif admin.object.type == 'msi_admin.block.menu' %}
+            {{ form_row(form.settings.menu) }}
+            {{ form_row(form.settings.class) }}
+        {% endif %}#}
     </div>
 
     <div class="tab-pane fade" id="tab2">
+        {{ form_row(form.name) }}
         {% for translation in form.translations %}
             {{ form_row(translation.published) }}
         {% endfor %}
-        {{ form_row(form.type) }}
         {{ form_row(form.slot) }}
         {{ form_row(form.pages) }}
     </div>
 
     {% if app.user.isSuperAdmin %}
-    <div class="tab-pane fade" id="tab3">
-        {{ form_row(form.operators) }}
-    </div>
+        <div class="tab-pane fade" id="tab3">
+            {{ form_row(form.operators) }}
+        </div>
     {% endif %}
 </div>
 
 {{ form_rest(form) }}
+
+{% else %}
+
+{{ form_rest(form) }}
+
+{% endif %}

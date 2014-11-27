@@ -32,10 +32,10 @@ class PageAdmin extends Admin
             ->add('title')
         ;
 
-        // if ($this->getUser()->isSuperAdmin()) {
-        //     $builder->add('slug');
-        //     $builder->add('route');
-        // }
+        if ($this->getUser()->isSuperAdmin()) {
+            $builder->add('slug');
+            $builder->add('route');
+        }
     }
 
     public function buildForm(FormBuilder $builder)

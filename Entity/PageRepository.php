@@ -11,8 +11,8 @@ class PageRepository extends EntityRepository
         $qb = $this->createQueryBuilder('a');
 
         $qb
-            ->join('a.translations', 'translations')
-            ->join('a.blocks', 'blocks')
+            ->leftJoin('a.translations', 'translations')
+            ->leftJoin('a.blocks', 'blocks')
 
             ->andWhere($qb->expr()->eq('a.site', ':site'))
             ->setParameter('site', $site)
@@ -39,8 +39,8 @@ class PageRepository extends EntityRepository
         $qb = $this->createQueryBuilder('a');
 
         $qb
-            ->join('a.translations', 'translations')
-            ->join('a.blocks', 'blocks')
+            ->leftJoin('a.translations', 'translations')
+            ->leftJoin('a.blocks', 'blocks')
 
             ->andWhere($qb->expr()->eq('translations.published', ':published'))
             ->setParameter('published', true)

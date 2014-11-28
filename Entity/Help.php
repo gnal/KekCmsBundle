@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Help
 {
+    use \Msi\AdminBundle\Doctrine\Extension\Model\Timestampable;
     use \Msi\AdminBundle\Doctrine\Extension\Model\Translatable;
     use \Msi\AdminBundle\Doctrine\Extension\Model\Blameable;
     use \Msi\AdminBundle\Doctrine\Extension\Model\Sortable;

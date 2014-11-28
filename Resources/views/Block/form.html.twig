@@ -3,8 +3,8 @@
 {% if admin.object.id %}
 
 <ul class="nav nav-tabs">
-    <li class="active"><a href="#tab1" data-toggle="tab">{{ 'Content'|trans }}</a></li>
-    <li><a href="#tab2" data-toggle="tab">{{ 'Settings'|trans }}</a></li>
+    <li class="active"><a href="#tab1" data-toggle="tab">{{ 'content'|trans }}</a></li>
+    <li><a href="#tab2" data-toggle="tab">{{ 'settings'|trans }}</a></li>
     {% if app.user.isSuperAdmin %}
         <li><a href="#tab3" data-toggle="tab">{{ 'ACL'|trans }}</a></li>
     {% endif %}

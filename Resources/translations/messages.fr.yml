@@ -50,6 +50,18 @@ group:
     name: nom
     roles: rôles
 
+#menu
+menu:
+    published: publié
+    uniquename: nom
+    name: nom
+    operators: groupes autorisés
+    page: page
+    route: route
+    targetblank: target blank
+    parent: parent
+    attr: attributs
+
 #email
 email:
     name: nom

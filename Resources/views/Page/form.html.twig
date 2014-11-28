@@ -1,10 +1,10 @@
 {% form_theme form 'MsiAdminBundle:Form:form.html.twig' %}
 
 <ul class="nav nav-tabs">
-    <li class="active"><a href="#content2" data-toggle="tab">{{ 'Content'|trans }}</a></li>
-    <li><a href="#main1" data-toggle="tab">{{ 'Settings'|trans }}</a></li>
+    <li class="active"><a href="#content2" data-toggle="tab">{{ 'content'|trans }}</a></li>
+    <li><a href="#main1" data-toggle="tab">{{ 'settings'|trans }}</a></li>
     <li><a href="#seo" data-toggle="tab">{{ 'SEO'|trans }}</a></li>
-    {% if app.user.isSuperAdmin %}<li><a href="#admin" data-toggle="tab">{{ 'Admin'|trans }}</a></li>{% endif %}
+    {% if app.user.isSuperAdmin %}<li><a href="#admin" data-toggle="tab">{{ 'admin'|trans }}</a></li>{% endif %}
 </ul>
 
 {{ form_errors(form) }}

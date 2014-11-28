@@ -36,13 +36,15 @@
 
 {% block flash %}
     {% for flashMessage in app.session.flashbag.get('success') %}
-        <div class="alert alert-success fade in">
-            <i class="icon-large icon-ok-sign"></i> <span>{{ flashMessage }}</span>
+        <div class="alert alert-success alert-dismissible fade in">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true"><i class="fa fa-times"></i></span><span class="sr-only">close</span></button>
+            {{ flashMessage }}
         </div>
     {% endfor %}
     {% for flashMessage in app.session.flashbag.get('error') %}
-        <div class="alert alert-danger fade in">
-            <i class="icon-large icon-exclamation-sign"></i> <span>{{ flashMessage }}</span>
+        <div class="alert alert-danger alert-dismissible fade in">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true"><i class="fa fa-times"></i></span><span class="sr-only">close</span></button>
+            {{ flashMessage }}
         </div>
     {% endfor %}
 {% endblock %}

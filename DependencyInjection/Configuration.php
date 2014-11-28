@@ -29,6 +29,7 @@ class Configuration implements ConfigurationInterface
         $this->addBlockSection($rootNode);
         $this->addAdminSection($rootNode);
         $this->addConfigSection($rootNode);
+        $this->addHelpSection($rootNode);
 
         return $treeBuilder;
     }
@@ -50,6 +51,17 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('config_class')
                     ->defaultValue('Msi\CmsBundle\Entity\Config')
+                    ->cannotBeEmpty()
+                ->end()
+            ->end();
+    }
+
+    private function addHelpSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->scalarNode('help_class')
+                    ->defaultValue('Msi\CmsBundle\Entity\Help')
                     ->cannotBeEmpty()
                 ->end()
             ->end();

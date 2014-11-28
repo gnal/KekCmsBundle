@@ -21,6 +21,13 @@ entity:
     Config: configuration|configurations
     User: utilisateur|utilisateurs
     Group: groupe|groupes
+    Help: aide|aides
+
+#help
+help:
+    published: publié
+    title: titre
+    content: contenu
 
 #site
 site:
@@ -96,3 +103,5 @@ block:
     body: contenu
     pages: pages
     operators: groupes autorisés
+
+tech_support: soutien technique

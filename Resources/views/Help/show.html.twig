@@ -1,0 +1,17 @@
+{% extends 'MsiAdminBundle::layout.html.twig' %}
+
+{% block title %}{{ entity }}{% endblock %}
+
+{% block content %}
+{{ entity.translation.content|raw }}
+{% endblock content %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li><a href="{{ path('msi_admin_dashboard') }}"><i class="fa-dashboard fa"></i> dashboard</a></li>
+    <li><a href="{{ path('msi_cms_help_index') }}">{{ 'tech_support'|trans }}</a></li>
+    <li class="active">{{ entity }}</li>
+</ol>
+{% endblock %}
+
+{% block working_locale %}{% endblock %}

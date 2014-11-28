@@ -31,7 +31,7 @@ class BlockAdmin extends Admin
     {
         $grid
             ->add('published', 'boolean')
-            ->add('showOnAllPages', 'boolean')
+            // ->add('showOnAllPages', 'boolean')
             ->add('name')
         ;
     }

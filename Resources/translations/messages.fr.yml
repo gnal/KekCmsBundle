@@ -1,14 +1,14 @@
-Name: Nom
-Fromwho: De
-Towho: À
-Availablevars: Variables disponibles
-Subject: Sujet
-Body: Contenu
-availablevars_data_help: "Variables que vous pouvez utiliser dans le contenu. Comment utiliser : Bienvenue #firstName# #lastName# !"
+# Name: Nom
+# Fromwho: De
+# Towho: À
+# Availablevars: Variables disponibles
+# Subject: Sujet
+# Body: Contenu
+# availablevars_data_help: "Variables que vous pouvez utiliser dans le contenu. Comment utiliser : Bienvenue #firstName# #lastName# !"
 
-Offlinemessage: Message hors ligne
+# Offlinemessage: Message hors ligne
 
-Uniquename: Nom unique
+# Uniquename: Nom unique
 
 entity:
     Menu: menu|menus
@@ -18,3 +18,69 @@ entity:
     Block: bloc|blocs
     Site: site|sites
     Email: email|emails
+    Config: configuration|configurations
+    User: utilisateur|utilisateurs
+    Group: groupe|groupes
+
+#site
+site:
+    published: publié
+    brand: nom
+    host: host
+    offlinemessage: message hors-ligne
+    isdefault: site par défaut
+    locale: langue par défaut
+    locales: langues
+    metadescription: description
+    css: css
+    js: js
+
+#user
+user:
+    locked: bloqué
+    email: courriel
+    lastlogin: dernière connexion
+    first: mot de passe
+    second: vérification du mot de passe
+    groups: groupes
+    operators: groupes autorisés
+
+#group
+group:
+    name: nom
+    roles: rôles
+
+#email
+email:
+    name: nom
+    fromwho: de
+    towho: à
+    cc: cc
+    bcc: bcc
+    subject: sujet
+    body: message
+    availablevars: variables disponibles
+availablevars_data_help: "variables dont vous disposez afin de rendre le contenu du courriel dynamique. Exemple : Bienvenue #firstName# #lastName# !"
+
+#page
+page:
+    title: titre
+    published: publié
+    slug: slug
+    route: route
+    metadescription: description
+    metatitle: titre
+    parent: parent
+    css: css
+    js: js
+
+#block
+block:
+    name: nom
+    published: publié
+    type: type
+    slot: slot
+    showonallpages: afficher sur toutes les pages
+    body: contenu
+    pages: pages
+    operators: groupes autorisés

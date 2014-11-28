@@ -41,6 +41,7 @@ class SiteAdmin extends Admin
             ->add('host', 'text', [
                 'attr' => [
                     'data-help' => 'Pro tip: Enter the correct host name instead of relying of the "isDefault" field to reduce number of database queries.',
+                    'placeholder' => 'www.example.com',
                 ],
             ])
             ->add('isDefault')

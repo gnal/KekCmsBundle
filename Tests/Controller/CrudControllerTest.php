@@ -19,6 +19,20 @@ class CrudControllerTest extends WebTestCase
         $this->baseCrudTest('page', $input1, $input2, 'Test', 'Foo');
     }
 
+    public function testBlockCrud()
+    {
+        $input1 = [
+            'form[name]' => 'text',
+            'form[type]' => 'msi_cms.block.type.text',
+        ];
+
+        $input2 = [
+            'form[name]' => 'foo',
+        ];
+
+        $this->baseCrudTest('block', $input1, $input2, 'text', 'foo');
+    }
+
     public function testSiteCrud()
     {
         $input1 = [
@@ -71,7 +85,7 @@ class CrudControllerTest extends WebTestCase
         ]);
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/admin/'.$path);
+        $crawler = $client->request('GET', '/fr/admin/'.$path);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -86,7 +100,7 @@ class CrudControllerTest extends WebTestCase
         $id = intval($crawler->filter('.entity_id')->text());
 
         // Check data in the show view
-        $this->assertGreaterThan(0, $crawler->filter('h1>small:contains("'.$name1.'")')->count());
+        $this->assertGreaterThan(0, $crawler->filter('h1:contains("'.$name1.'")')->count());
 
         // Edit the entity
         $crawler = $client->click($crawler->filter('a.msi_admin_crud_edit')->link());
@@ -97,14 +111,14 @@ class CrudControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // Check the element contains an attribute with value equals "Foo"
-        $this->assertGreaterThan(0, $crawler->filter('h1>small:contains("'.$name2.'")')->count());
+        $this->assertGreaterThan(0, $crawler->filter('h1:contains("'.$name2.'")')->count());
 
         // Delete the entity
         $crawler = $client->click($crawler->filter('a.msi_admin_crud_delete')->link());
         $crawler = $client->followRedirect();
 
         // Check the entity has been delete on the list
-        $crawler = $client->request('GET', '/admin/'.$path.'/show?id='.$id);
+        $crawler = $client->request('GET', '/fr/admin/'.$path.'/show?id='.$id);
         $this->assertTrue($client->getResponse()->isNotFound());
     }
 }

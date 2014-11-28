@@ -61,7 +61,7 @@ class MenuNodeAdmin extends Admin
                 'property' => 'toTree',
             ])
             ->add('targetBlank', 'checkbox')
-            ->add('attr', 'text')
+            ->add('linkAttributes')
         ;
         if ($this->container->get('security.context')->getToken()->getUser()->isSuperAdmin()) {
             $builder->add('operators', 'entity', [

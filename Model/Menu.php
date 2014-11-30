@@ -230,6 +230,6 @@ abstract class Menu
 
     public function __toString()
     {
-        return (string) $this->getTranslation()->getName() ?: $this->uniqueName;
+        return (string) $this->getTranslation() ? $this->getTranslation()->getName() : $this->id;
     }
 }

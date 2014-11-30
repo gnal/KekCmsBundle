@@ -4,6 +4,7 @@ namespace Msi\CmsBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\MappedSuperclass
@@ -21,7 +22,8 @@ abstract class Page
     protected $id;
 
     /**
-     * @ORM\Column()
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     protected $template;
 

@@ -4,6 +4,7 @@ namespace Msi\CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -22,11 +23,13 @@ class EmailTranslation
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     protected $subject;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     protected $body;
 

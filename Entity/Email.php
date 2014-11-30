@@ -4,6 +4,7 @@ namespace Msi\CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Msi\CmsBundle\Entity\EmailRepository")
@@ -21,6 +22,7 @@ class Email
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -31,6 +33,8 @@ class Email
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     protected $fromWho;
 

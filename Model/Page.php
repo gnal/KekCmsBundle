@@ -23,7 +23,6 @@ abstract class Page
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank()
      */
     protected $template;
 

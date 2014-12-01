@@ -28,6 +28,7 @@ help:
     published: publié
     title: titre
     content: contenu
+    new: nouvel
 
 #site
 site:
@@ -41,6 +42,7 @@ site:
     metadescription: description
     css: css
     js: js
+    new: nouveau
 
 #user
 user:
@@ -51,11 +53,13 @@ user:
     second: vérification du mot de passe
     groups: groupes
     operators: groupes autorisés
+    new: nouvel
 
 #group
 group:
     name: nom
     roles: rôles
+    new: nouveau
 
 #menu
 menu:
@@ -68,6 +72,7 @@ menu:
     targetblank: target blank
     parent: parent
     attr: attributs
+    new: nouveau
 
 #email
 email:
@@ -79,6 +84,7 @@ email:
     subject: sujet
     body: message
     availablevars: variables disponibles
+    new: nouveau
 availablevars_data_help: "variables dont vous disposez afin de rendre le contenu du courriel dynamique. Exemple : Bienvenue #firstName# #lastName# !"
 
 #page
@@ -92,6 +98,7 @@ page:
     parent: parent
     css: css
     js: js
+    new: nouvelle
 
 #block
 block:
@@ -103,5 +110,8 @@ block:
     body: contenu
     pages: pages
     operators: groupes autorisés
+    new: nouveau
 
 tech_support: soutien technique
+edit_profile: modifier mon profil
+edit_password: modifier mon mot de passe

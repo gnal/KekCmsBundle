@@ -109,8 +109,10 @@ block:
     showonallpages: afficher sur toutes les pages
     body: contenu
     pages: pages
+    sort: ordre
     operators: groupes autorisés
     new: nouveau
+    all: toutes
 
 tech_support: soutien technique
 edit_profile: modifier mon profil

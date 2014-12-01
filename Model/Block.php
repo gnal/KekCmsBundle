@@ -12,7 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 abstract class Block
 {
     use \Msi\AdminBundle\Doctrine\Extension\Model\Translatable;
-    use \Msi\AdminBundle\Doctrine\Extension\Model\Sortable;
 
     /**
      * @ORM\Column()
@@ -41,6 +40,11 @@ abstract class Block
      */
     protected $showOnAllPages;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $sort;
+
     protected $rendered;
 
     protected $pages;
@@ -49,12 +53,25 @@ abstract class Block
 
     public function __construct()
     {
+        $this->sort = 1;
         $this->rendered = false;
         $this->showOnAllPages = false;
         $this->settings = [];
         $this->pages = new ArrayCollection();
         $this->translations = new ArrayCollection();
         $this->operators = new ArrayCollection();
+    }
+
+    public function getSort()
+    {
+        return $this->sort;
+    }
+
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
+
+        return $this;
     }
 
     public function getShowOnAllPages()

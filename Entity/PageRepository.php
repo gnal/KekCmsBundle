@@ -23,7 +23,7 @@ class PageRepository extends EntityRepository
             ->andWhere($qb->expr()->eq('translations.locale', ':locale'))
             ->setParameter('locale', $locale)
 
-            ->addOrderBy('blocks.position', 'ASC')
+            ->addOrderBy('blocks.sort', 'ASC')
         ;
 
         if ($slug !== null) {

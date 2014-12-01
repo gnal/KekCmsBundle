@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Msi\AdminBundle\Form\Type\DynamicType;
 use JMS\DiExtraBundle\Annotation as DI;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @DI\Service("msi_cms_block_admin", parent="msi_admin.admin")
@@ -23,7 +24,6 @@ class BlockAdmin extends Admin
         $config
             ->addOption('form_template', 'MsiCmsBundle:Block:form.html.twig')
             ->addOption('search_fields', ['a.id', 'a.type', 'a.name', 'a.slot'])
-            ->addOption('order_by', ['a.name' => 'ASC'])
         ;
     }
 
@@ -31,8 +31,9 @@ class BlockAdmin extends Admin
     {
         $grid
             ->add('published', 'boolean')
-            // ->add('showOnAllPages', 'boolean')
             ->add('name')
+            ->add('slot')
+            ->add('pages', 'Msi\CmsBundle\Grid\Column\BlockPagesColumn')
         ;
     }
 
@@ -77,6 +78,7 @@ class BlockAdmin extends Admin
             $builder->add('slot', 'choice', ['choices' => $this->container->getParameter('msi_cms.block.slots')]);
 
             $builder->add('showOnAllPages', 'checkbox');
+            $builder->add('sort');
         } else {
             $types = [];
             foreach ($this->container->getServiceIds() as $id) {
@@ -106,32 +108,47 @@ class BlockAdmin extends Admin
         }
     }
 
-    public function buildFilterForm(FormBuilder $builder)
-    {
-        $types = [];
-        foreach ($this->container->getServiceIds() as $id) {
-            if (preg_match('@^.+_.+\.block\..+$@', $id)) {
-                $types[$id] = $id;
-            }
-        }
+    // public function buildFilterForm(FormBuilder $builder)
+    // {
+    //     $types = [];
+    //     foreach ($this->container->getServiceIds() as $id) {
+    //         if (preg_match('@^.+_.+\.block\..+$@', $id)) {
+    //             $types[$id] = $id;
+    //         }
+    //     }
 
-        $builder
-            ->add('pages', 'entity', array(
-                'class' => $this->container->getParameter('msi_cms.page.class'),
-                'label' => ' ',
-                'empty_value' => '- '.$this->container->get('translator')->transchoice('entity.Page', 1).' -',
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('a')
-                        ->leftJoin('a.translations', 't')
-                        ->addSelect('t')
-                    ;
-                },
-            ))
-            ->add('type', 'choice', array(
-                'label' => ' ',
-                'empty_value' => '- Type -',
-                'choices' => $types,
-            ))
+    //     $builder
+    //         ->add('pages', 'entity', array(
+    //             'class' => $this->container->getParameter('msi_cms.page.class'),
+    //             'label' => ' ',
+    //             'empty_value' => '- '.$this->container->get('translator')->transchoice('entity.Page', 1).' -',
+    //             'query_builder' => function(EntityRepository $er) {
+    //                 return $er->createQueryBuilder('a')
+    //                     ->leftJoin('a.translations', 't')
+    //                     ->addSelect('t')
+    //                 ;
+    //             },
+    //         ))
+    //         ->add('type', 'choice', array(
+    //             'label' => ' ',
+    //             'empty_value' => '- Type -',
+    //             'choices' => $types,
+    //         ))
+    //     ;
+    // }
+
+    public function configureAdminFindAllQuery(QueryBuilder $qb)
+    {
+        $qb
+            ->leftJoin('a.pages', 'pages')
+            ->leftJoin('pages.translations', 'pages_translations')
+            ->addSelect('pages')
+            ->addSelect('pages_translations')
+
+            ->addOrderBy('a.slot', 'ASC')
+            ->addOrderBy('a.sort', 'ASC')
+
+            ->addOrderBy('pages_translations.title', 'ASC')
         ;
     }
 

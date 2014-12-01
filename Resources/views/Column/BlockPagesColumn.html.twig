@@ -1,0 +1,9 @@
+<td>
+    {% if column.entity.showOnAllPages == false %}
+        <span data-toggle="popover" data-placement="top" data-trigger="hover" title="" data-content="{{ value|join(', ') }}">
+            {{ value|join(', ')|truncate(options.truncate_length, options.truncate_preserve, options.truncate_separator) }}
+        </span>
+    {% else %}
+        {{ 'block.all'|trans }}
+    {% endif %}
+</td>

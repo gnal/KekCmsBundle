@@ -30,7 +30,7 @@ class BlockProvider
                     'showOnAllPages' => true,
                 ],
                 [
-                    'position' => 'ASC',
+                    'sort' => 'ASC',
                 ]
             );
 

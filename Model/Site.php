@@ -29,16 +29,6 @@ abstract class Site
     protected $isDefault;
 
     /**
-     * @ORM\Column(type="string")
-     */
-    protected $locale;
-
-    /**
-     * @ORM\Column(type="array")
-     */
-    protected $locales;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      */
     protected $css;
@@ -86,30 +76,6 @@ abstract class Site
     public function setIsDefault($isDefault)
     {
         $this->isDefault = $isDefault;
-
-        return $this;
-    }
-
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
-    }
-
-    public function getLocales()
-    {
-        return $this->locales;
-    }
-
-    public function setLocales($locales)
-    {
-        $this->locales = $locales;
 
         return $this;
     }

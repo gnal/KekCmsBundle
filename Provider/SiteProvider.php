@@ -11,19 +11,22 @@ class SiteProvider
 {
     private $requestStack;
     private $siteManager;
+    private $defaultLocale;
 
     private $site;
 
     /**
      * @DI\InjectParams({
      *     "requestStack" = @DI\Inject("request_stack"),
-     *     "siteManager" = @DI\Inject("msi_cms.site_manager")
+     *     "siteManager" = @DI\Inject("msi_cms.site_manager"),
+     *     "defaultLocale" = @DI\Inject("%locale%")
      * })
      */
-    public function __construct($requestStack, $siteManager)
+    public function __construct($requestStack, $siteManager, $defaultLocale)
     {
         $this->requestStack = $requestStack;
         $this->siteManager = $siteManager;
+        $this->defaultLocale = $defaultLocale;
     }
 
     public function getSite()
@@ -66,6 +69,6 @@ class SiteProvider
     // not sure why this is here
     public function getWorkingLocale()
     {
-        return $this->requestStack->getCurrentRequest()->getSession()->get('working_locale', $this->getSite()->getLocale());
+        return $this->requestStack->getCurrentRequest()->getSession()->get('working_locale', $this->defaultLocale);
     }
 }

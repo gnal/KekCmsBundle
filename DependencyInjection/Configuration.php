@@ -13,15 +13,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('msi_cms');
 
-        $rootNode
-            ->children()
-                ->arrayNode('app_locales')
-                    ->prototype('scalar')->end()
-                    ->defaultValue(['en', 'fr'])
-                    ->cannotBeEmpty()
-                ->end()
-            ->end();
-
         $this->addSiteSection($rootNode);
         $this->addEmailSection($rootNode);
         $this->addMenuSection($rootNode);

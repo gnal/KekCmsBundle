@@ -3,7 +3,6 @@
 namespace Msi\CmsBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\MappedSuperclass
@@ -11,7 +10,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 abstract class SiteTranslation
 {
     use \Msi\AdminBundle\Doctrine\Extension\Model\Translation;
-    use \Msi\AdminBundle\Doctrine\Extension\Model\Publishable;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -22,23 +20,6 @@ abstract class SiteTranslation
      * @ORM\Column(type="string", nullable=true)
      */
     protected $brand;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $offlineMessage;
-
-    public function getOfflineMessage()
-    {
-        return $this->offlineMessage;
-    }
-
-    public function setOfflineMessage($offlineMessage)
-    {
-        $this->offlineMessage = $offlineMessage;
-
-        return $this;
-    }
 
     public function getBrand()
     {

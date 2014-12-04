@@ -30,7 +30,6 @@ class MsiCmsExtension extends Extension
 
     private function registerConfiguration($config, ContainerBuilder $container)
     {
-        $container->setParameter('msi_cms.app_locales', $config['app_locales']);
         $container->setParameter('msi_cms.site.class', $config['site_class']);
         $container->setParameter('msi_cms.config.class', $config['config_class']);
         $container->setParameter('msi_cms.help.class', $config['help_class']);

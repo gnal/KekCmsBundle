@@ -24,7 +24,6 @@ class SiteAdmin extends Admin
     public function buildGrid(Grid $builder)
     {
         $builder
-            ->add('published', 'boolean')
             ->add('brand')
             ->add('host')
         ;
@@ -32,11 +31,6 @@ class SiteAdmin extends Admin
 
     public function buildForm(FormBuilder $builder)
     {
-        $choices = [];
-        foreach ($this->container->getParameter('msi_cms.app_locales') as $locale) {
-            $choices[$locale] = strtoupper($locale);
-        }
-
         $builder
             ->add('host', 'text', [
                 'attr' => [
@@ -45,18 +39,6 @@ class SiteAdmin extends Admin
                 ],
             ])
             ->add('isDefault')
-            ->add('locale', 'choice', [
-                'choices' => $choices,
-                'label' => 'Default language',
-
-            ])
-            ->add('locales', 'choice', [
-                'multiple' => true,
-                'expanded' => true,
-                'choices' => $choices,
-                'label' => 'Available languages',
-
-            ])
             ->add('css', 'textarea')
             ->add('js', 'textarea')
         ;
@@ -65,9 +47,7 @@ class SiteAdmin extends Admin
     public function buildTranslationForm(FormBuilder $builder)
     {
         $builder
-            ->add('published', 'checkbox')
             ->add('brand')
-            ->add('offlineMessage', 'textarea')
             ->add('metaDescription', 'textarea')
         ;
     }

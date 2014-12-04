@@ -13,17 +13,11 @@
         {{ form_row(form.host) }}
         {% for translation in form.translations %}
             {{ form_row(translation.brand) }}
-            {{ form_row(translation.offlineMessage) }}
         {% endfor %}
     </div>
 
     <div class="tab-pane fade" id="tab2">
-        {% for translation in form.translations %}
-            {{ form_row(translation.published) }}
-        {% endfor %}
         {{ form_row(form.isDefault) }}
-        {{ form_row(form.locale) }}
-        {{ form_row(form.locales) }}
     </div>
 
     <div class="tab-pane fade" id="tab3">

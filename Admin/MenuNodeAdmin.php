@@ -23,7 +23,6 @@ class MenuNodeAdmin extends Admin
         $config->setDataClass($this->container->getParameter('msi_cms.menu.class'));
         $config->setParent($this->container->get('msi_cms_menu_root_admin'));
         $config
-            ->addOption('template_index', 'MsiCmsBundle:MenuNode:index.html.twig')
             ->addOption('form_template', 'MsiCmsBundle:MenuNode:form.html.twig')
             ->addOption('search_fields', ['a.id', 'translations.name'])
         ;

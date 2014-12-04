@@ -85,7 +85,6 @@ class MenuNodeAdmin extends Admin
 
     public function configureAdminFindAllQuery(QueryBuilder $qb)
     {
-        // $qb->resetDQLPart('where');
         $qb
             ->andWhere('a.menu = :parent')
             ->setParameter('parent', $this->getParentObject())

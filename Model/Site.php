@@ -38,10 +38,27 @@ abstract class Site
      */
     protected $js;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $theme;
+
     public function __construct()
     {
         $this->translations = new ArrayCollection();
         $this->isDefault = false;
+    }
+
+    public function getTheme()
+    {
+        return $this->theme;
+    }
+
+    public function setTheme($theme)
+    {
+        $this->theme = $theme;
+
+        return $this;
     }
 
     public function getCss()

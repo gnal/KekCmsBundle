@@ -33,6 +33,10 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue('Msi\CmsBundle\Entity\Site')
                     ->cannotBeEmpty()
                 ->end()
+                ->arrayNode('site_themes')
+                    ->useAttributeAsKey('name')
+                    ->prototype('scalar')->end()
+                ->end()
             ->end();
     }
 

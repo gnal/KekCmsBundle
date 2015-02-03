@@ -40,6 +40,7 @@ site:
     locale: langue par défaut
     locales: langues
     metadescription: description
+    theme: thème
     css: css
     js: js
     new: nouveau

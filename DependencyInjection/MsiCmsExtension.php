@@ -31,6 +31,7 @@ class MsiCmsExtension extends Extension
     private function registerConfiguration($config, ContainerBuilder $container)
     {
         $container->setParameter('msi_cms.site.class', $config['site_class']);
+        $container->setParameter('msi_cms.site.themes', $config['site_themes']);
         $container->setParameter('msi_cms.config.class', $config['config_class']);
         $container->setParameter('msi_cms.help.class', $config['help_class']);
         $container->setParameter('msi_cms.email.class', $config['email_class']);

@@ -142,8 +142,6 @@ class BlockAdmin extends Admin
         $qb
             ->leftJoin('a.pages', 'pages')
             ->leftJoin('pages.translations', 'pages_translations')
-            ->addSelect('pages')
-            ->addSelect('pages_translations')
 
             ->addOrderBy('a.slot', 'ASC')
             ->addOrderBy('a.sort', 'ASC')

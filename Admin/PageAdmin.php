@@ -52,7 +52,7 @@ class PageAdmin extends Admin
 
             $parentChoices = $this->getRepository()->findAdminFormParentChoices($this->getObject()->getId());
 
-            if (count($this->container->getParameter('msi_cms.page.layouts')) > 1) {
+            if (count($this->container->getParameter('msi_cms.page.layouts')) > 0) {
                 $builder->add('template', 'choice', ['choices' => $this->container->getParameter('msi_cms.page.layouts')]);
             }
 

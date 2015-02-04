@@ -44,7 +44,10 @@ class SiteAdmin extends Admin
         ;
 
         if (count($this->container->getParameter('msi_cms.site.themes')) > 0) {
-            $builder->add('theme', 'choice', ['choices' => $this->container->getParameter('msi_cms.site.themes')]);
+            $builder->add('theme', 'choice', [
+                'required' => false,
+                'choices' => $this->container->getParameter('msi_cms.site.themes'),
+            ]);
         }
     }
 

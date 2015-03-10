@@ -24,7 +24,6 @@ class SiteAdmin extends Admin
     public function buildGrid(Grid $builder)
     {
         $builder
-            ->add('published', 'boolean')
             ->add('brand', 'edit')
             ->add('host')
         ;

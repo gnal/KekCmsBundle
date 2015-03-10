@@ -39,7 +39,6 @@ msi_cms_site_admin:
         brand: Nom
         host: Site
     form:
-        published: Publié
         brand: Nom
         host: Site
         offlinemessage: Message hors-ligne

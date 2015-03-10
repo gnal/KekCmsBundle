@@ -35,6 +35,7 @@ msi_cms_site_admin:
     entity: Site|Sites
     new: Nouveau
     a: un
+    the: le&nbsp;
     grid:
         brand: Nom
         host: Site

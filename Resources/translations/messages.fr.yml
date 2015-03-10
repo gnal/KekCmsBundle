@@ -31,19 +31,23 @@ help:
     new: nouvel
 
 #site
-site:
-    published: publié
-    brand: nom
-    host: host
-    offlinemessage: message hors-ligne
-    isdefault: site par défaut
-    locale: langue par défaut
-    locales: langues
-    metadescription: description
-    theme: thème
-    css: css
-    js: js
-    new: nouveau
+msi_cms_site_admin:
+    entity: Site|Sites
+    new: Nouveau
+    a: un
+    grid:
+        brand: Nom
+        host: Site
+    form:
+        published: Publié
+        brand: Nom
+        host: Site
+        offlinemessage: Message hors-ligne
+        isdefault: Site par défaut
+        metadescription: Description
+        theme: Thème
+        css: CSS
+        js: JS
 
 #user
 user:
@@ -130,3 +134,4 @@ edit_password: modifier mon mot de passe
 
 Content: Contenu
 Settings: Paramètres
+General: Général

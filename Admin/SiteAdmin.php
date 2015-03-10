@@ -24,7 +24,8 @@ class SiteAdmin extends Admin
     public function buildGrid(Grid $builder)
     {
         $builder
-            ->add('brand')
+            ->add('published', 'boolean')
+            ->add('brand', 'edit')
             ->add('host')
         ;
     }
@@ -34,7 +35,6 @@ class SiteAdmin extends Admin
         $builder
             ->add('host', 'text', [
                 'attr' => [
-                    'data-help' => 'Pro tip: Enter the correct host name instead of relying of the "isDefault" field to reduce number of database queries.',
                     'placeholder' => 'www.example.com',
                 ],
             ])

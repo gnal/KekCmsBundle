@@ -89,17 +89,26 @@ email:
 availablevars_data_help: "variables dont vous disposez afin de rendre le contenu du courriel dynamique. Exemple : Bienvenue #firstName# #lastName# !"
 
 #page
-page:
-    title: titre
-    published: publié
-    slug: slug
-    route: route
-    metadescription: description
-    metatitle: titre
-    parent: parent
-    css: css
-    js: js
-    new: nouvelle
+msi_cms_page_admin:
+    entity: Page|Pages
+    new: Nouvelle
+    the: la&nbsp;
+    grid:
+        published: Publié
+        title: Titre
+        slug: Slug
+        route: Route
+    form:
+        title: titre
+        published: publié
+        slug: slug
+        route: route
+        metadescription: description
+        metatitle: titre
+        parent: parent
+        css: css
+        js: js
+        new: nouvelle
 
 #block
 block:
@@ -118,3 +127,6 @@ block:
 tech_support: soutien technique
 edit_profile: modifier mon profil
 edit_password: modifier mon mot de passe
+
+Content: Contenu
+Settings: Paramètres

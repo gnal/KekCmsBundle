@@ -29,3 +29,14 @@ services:
     # msi_cms.mailer:
     #     class: Msi\CmsBundle\Mailer\Mailer
     #     arguments: [@mailer, @msi_cms.email_manager, @templating]
+
+
+
+
+# admins
+
+    msi_cms_page_admin:
+        class: %msi_cms.page.admin%
+        parent: msi_admin.admin
+        tags:
+            - { name: msi.admin }

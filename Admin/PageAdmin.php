@@ -7,12 +7,7 @@ use Msi\AdminBundle\Admin\AdminConfig;
 use Msi\AdminBundle\Grid\Grid;
 use Symfony\Component\Form\FormBuilder;
 use Doctrine\ORM\QueryBuilder;
-use JMS\DiExtraBundle\Annotation as DI;
 
-/**
- * @DI\Service("msi_cms_page_admin", parent="msi_admin.admin")
- * @DI\Tag("msi.admin")
- */
 class PageAdmin extends Admin
 {
     public function buildConfig(AdminConfig $config)
@@ -90,10 +85,5 @@ class PageAdmin extends Admin
             ->add('metaTitle')
             ->add('metaDescription', 'textarea')
         ;
-    }
-
-    public function buildListQuery(QueryBuilder $qb)
-    {
-        $qb->addOrderBy('translations.title', 'ASC');
     }
 }

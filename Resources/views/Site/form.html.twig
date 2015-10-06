@@ -18,7 +18,9 @@
 
     <div class="tab-pane fade" id="tab2">
         {{ form_row(form.isDefault) }}
+        {% if form.theme is defined %}
         {{ form_row(form.theme) }}
+        {% endif %}
     </div>
 
     <div class="tab-pane fade" id="tab3">

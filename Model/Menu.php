@@ -67,7 +67,6 @@ abstract class Menu
         $this->translations = new ArrayCollection();
         $this->children = new ArrayCollection();
         $this->targetBlank = false;
-        $this->operators = new ArrayCollection();
     }
 
     public function getUniqueName()
@@ -90,18 +89,6 @@ abstract class Menu
     public function setLinkAttributes($linkAttributes)
     {
         $this->linkAttributes = $linkAttributes;
-
-        return $this;
-    }
-
-    public function getOperators()
-    {
-        return $this->operators;
-    }
-
-    public function setOperators($operators)
-    {
-        $this->operators = $operators;
 
         return $this;
     }

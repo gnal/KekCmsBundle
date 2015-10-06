@@ -1,3 +1,5 @@
-# msi_cms_menu_node_admin_sort:
-#     pattern: /admin/menu-node/sort.html
-#     defaults: { _controller: MsiCmsBundle:MenuNode:sort, _admin: msi_cms_menu_node_admin }
+msi_page_show:
+    path: /{slug}
+    defaults:
+        _controller: MsiCmsBundle:Page:show
+        slug: ~

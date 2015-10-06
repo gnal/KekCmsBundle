@@ -10,12 +10,16 @@ class PageRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('a');
 
+        if ($site->getId()) {
+            $qb
+                ->andWhere($qb->expr()->eq('a.site', ':site'))
+                ->setParameter('site', $site)
+            ;
+        }
+
         $qb
             ->leftJoin('a.translations', 'translations')
             ->leftJoin('a.blocks', 'blocks')
-
-            ->andWhere($qb->expr()->eq('a.site', ':site'))
-            ->setParameter('site', $site)
 
             ->andWhere($qb->expr()->eq('translations.published', ':published'))
             ->setParameter('published', true)

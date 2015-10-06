@@ -1,29 +1,9 @@
 {% form_theme form 'MsiAdminBundle:Form:form.html.twig' %}
 
-<ul class="nav nav-tabs">
-    <li class="active"><a href="#tab1" data-toggle="tab">{{ 'content'|trans }}</a></li>
-    <li><a href="#tab2" data-toggle="tab">{{ 'settings'|trans }}</a></li>
-    {% if app.user.isSuperAdmin %}
-    <li><a href="#tab3" data-toggle="tab">{{ 'ACL'|trans }}</a></li>
-    {% endif %}
-</ul>
+{% for translation in form.translations %}
+    {{ form_row(translation.published) }}
+{% endfor %}
 
-{{ form_errors(form) }}
-<div class="tab-content">
-    <div class="tab-pane fade active in" id="tab1">
-        {{ form_row(form.uniqueName) }}
-    </div>
+{{ form_row(form.uniqueName) }}
 
-    <div class="tab-pane fade" id="tab2">
-        {% for translation in form.translations %}
-            {{ form_row(translation.published) }}
-        {% endfor %}
-    </div>
-
-    {% if app.user.isSuperAdmin %}
-        <div class="tab-pane fade" id="tab3">
-            {{ form_row(form.operators) }}
-        </div>
-    {% endif %}
-</div>
 {{ form_rest(form) }}

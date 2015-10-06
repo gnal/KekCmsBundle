@@ -25,14 +25,9 @@ abstract class MenuTranslation
     protected $name;
 
     /**
-     * @ORM\Column(nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $route;
-
-    public function __construct()
-    {
-        $this->route = '#';
-    }
 
     public function getId()
     {

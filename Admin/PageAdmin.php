@@ -79,7 +79,9 @@ class PageAdmin extends Admin
     {
         $builder
             ->add('title')
-            ->add('published', 'checkbox')
+            ->add('published', 'checkbox', [
+                'label' => 'published',
+            ])
             ->add('body', 'textarea', [
                 'attr' => [
                     'class' => 'tinymce',

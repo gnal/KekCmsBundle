@@ -89,7 +89,7 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->scalarNode('page_class')
-                    ->isRequired()
+                    ->defaultValue('Msi\CmsBundle\Entity\Page')
                     ->cannotBeEmpty()
                 ->end()
                 ->arrayNode('page_layouts')

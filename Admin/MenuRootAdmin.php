@@ -23,8 +23,6 @@ class MenuRootAdmin extends Admin
         $config->addChild($this->container->get('msi_cms_menu_node_admin'));
         $config
             ->addOption('form_template', 'MsiCmsBundle:MenuRoot:form.html.twig')
-            ->addOption('search_fields', ['a.id', 'a.uniqueName'])
-            ->addOption('order_by', ['a.uniqueName' => 'ASC'])
         ;
     }
 
@@ -41,30 +39,20 @@ class MenuRootAdmin extends Admin
         $builder->add('uniqueName', 'text', [
             'constraints' => [new NotBlank],
         ]);
-
-        if ($this->container->get('security.context')->getToken()->getUser()->isSuperAdmin()) {
-            $builder->add('operators', 'entity', [
-                'class' => 'MsiUserBundle:Group',
-                'multiple' => true,
-                'expanded' => true,
-            ]);
-        }
     }
 
     public function buildTranslationForm(FormBuilder $builder)
     {
         $builder
-            ->add('published', 'checkbox')
+            ->add('published', 'checkbox', [
+                'label' => 'published',
+            ])
         ;
     }
 
-    public function configureAdminFindAllQuery(QueryBuilder $qb)
+    public function configureCrudQueryBuilder(QueryBuilder $qb)
     {
-        $qb->andWhere('a.lvl = 0');
-    }
-
-    public function postLoad(ArrayCollection $collection)
-    {
-        $this->container->get('msi_admin.bouncer')->operatorFilter($collection);
+        $qb->andWhere($qb->expr()->eq('a.lvl', ':a_lvl'));
+        $qb->setParameter('a_lvl', 0);
     }
 }

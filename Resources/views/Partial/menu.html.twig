@@ -1,0 +1,20 @@
+{% for menu in menus %}
+    {% if menu.page %}
+        {% if menu.page.route %}
+            {% set url = path(menu.page.route) %}
+        {% else %}
+            {% set url = path('msi_page_show', {'slug': menu.page.translation.slug}) %}
+        {% endif %}
+    {% else %}
+        {% if menu.translation.route|first is same as('@') %}
+            {% set url = path(menu.translation.route|slice(1)) %}
+        {% else %}
+            {% set url = menu.translation.route ?: '#' %}
+        {% endif %}
+    {% endif %}
+    <li>
+        <a{% if menu.targetBlank %} target="_blank"{% endif %} href="{{ url }}">
+            {{ menu.translation.name }}
+        </a>
+    </li>
+{% endfor %}

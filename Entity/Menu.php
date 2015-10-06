@@ -33,9 +33,4 @@ class Menu extends BaseMenu
     protected $children;
 
     protected $page;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Msi\UserBundle\Entity\Group")
-     */
-    protected $operators;
 }

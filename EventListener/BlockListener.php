@@ -39,12 +39,5 @@ class BlockListener implements EventSubscriber
                 'cascade' => ['persist'],
             ]);
         }
-
-        if (!$metadata->hasAssociation('operators')) {
-            $metadata->mapManyToMany([
-                'fieldName'    => 'operators',
-                'targetEntity' => $this->container->getParameter('fos_user.model.group.class'),
-            ]);
-        }
     }
 }

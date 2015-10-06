@@ -61,15 +61,5 @@ class PageUpdateListener
         if (!$this->provider->hasManySites()) {
             $object->setSite($this->provider->getSite());
         }
-
-        // set default layout
-
-        if (count($this->pageManager->getLayouts()) === 0) {
-            die('the config node "page_layouts" requires at least one element.');
-        }
-
-        if (count($this->pageManager->getLayouts()) === 1) {
-            $object->setTemplate(array_keys($this->pageManager->getLayouts())[0]);
-        }
     }
 }

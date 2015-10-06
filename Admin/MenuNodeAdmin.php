@@ -59,22 +59,19 @@ class MenuNodeAdmin extends Admin
                 'choices' => $parentChoices,
                 'property' => 'toTree',
             ])
-            ->add('targetBlank', 'checkbox')
+            ->add('targetBlank', 'checkbox', [
+                'label' => 'target_blank',
+            ])
             ->add('linkAttributes')
         ;
-        if ($this->container->get('security.context')->getToken()->getUser()->isSuperAdmin()) {
-            $builder->add('operators', 'entity', [
-                'class' => 'MsiUserBundle:Group',
-                'multiple' => true,
-                'expanded' => true,
-            ]);
-        }
     }
 
     public function buildTranslationForm(FormBuilder $builder)
     {
         $builder
-            ->add('published', 'checkbox')
+            ->add('published', 'checkbox', [
+                'label' => 'published',
+            ])
             ->add('name', 'text', [
                 'constraints' => [new NotBlank],
             ])
@@ -82,13 +79,16 @@ class MenuNodeAdmin extends Admin
         ;
     }
 
-    public function configureAdminFindAllQuery(QueryBuilder $qb)
+    public function configureCrudQueryBuilder(QueryBuilder $qb)
     {
         $qb
             ->andWhere('a.menu = :parent')
             ->setParameter('parent', $this->getParentObject())
         ;
-        $qb->andWhere('a.lvl != 0');
+
+        $qb->andWhere($qb->expr()->neq('a.lvl', ':a_lvl'));
+        $qb->setParameter('a_lvl', 0);
+
         $qb->addOrderBy('a.lft', 'ASC');
     }
 
@@ -102,11 +102,6 @@ class MenuNodeAdmin extends Admin
     public function preUpdate($entity)
     {
         $this->validateRoute($entity);
-    }
-
-    public function postLoad(ArrayCollection $collection)
-    {
-        $this->container->get('msi_admin.bouncer')->operatorFilter($collection);
     }
 
     // need to make a listener for that

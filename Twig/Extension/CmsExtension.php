@@ -25,7 +25,6 @@ class CmsExtension extends \Twig_Extension
             return $globals;
         }
         $request = $this->container->get('request_stack')->getCurrentRequest();
-        $workingLocale = $this->container->get('msi_cms.site_provider')->getWorkingLocale();
 
         $site = $this->container->get('msi_cms.site_provider')->getSite();
         $globals['site'] = $site;
@@ -40,7 +39,7 @@ class CmsExtension extends \Twig_Extension
 
         if (!$page) {
             $page = new $pageClass();
-            $page->createTranslation($workingLocale);
+            $page->createTranslation($request->getLocale());
         }
 
         $globals['page'] = $page;

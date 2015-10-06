@@ -67,14 +67,6 @@ class BlockAdmin extends Admin
                 },
             ]);
 
-            if ($this->container->get('security.context')->getToken()->getUser()->isSuperAdmin()) {
-                $builder->add('operators', 'entity', [
-                    'class' => 'MsiUserBundle:Group',
-                    'multiple' => true,
-                    'expanded' => true,
-                ]);
-            }
-
             $builder->add('slot', 'choice', ['choices' => $this->container->getParameter('msi_cms.block.slots')]);
 
             $builder->add('showOnAllPages', 'checkbox');
@@ -137,7 +129,7 @@ class BlockAdmin extends Admin
     //     ;
     // }
 
-    public function configureAdminFindAllQuery(QueryBuilder $qb)
+    public function configureCrudQueryBuilder(QueryBuilder $qb)
     {
         $qb
             ->leftJoin('a.pages', 'pages')
@@ -148,10 +140,5 @@ class BlockAdmin extends Admin
 
             ->addOrderBy('pages_translations.title', 'ASC')
         ;
-    }
-
-    public function postLoad(ArrayCollection $collection)
-    {
-        $this->container->get('msi_admin.bouncer')->operatorFilter($collection);
     }
 }

@@ -49,8 +49,6 @@ abstract class Block
 
     protected $pages;
 
-    protected $operators;
-
     public function __construct()
     {
         $this->sort = 1;
@@ -59,7 +57,6 @@ abstract class Block
         $this->settings = [];
         $this->pages = new ArrayCollection();
         $this->translations = new ArrayCollection();
-        $this->operators = new ArrayCollection();
     }
 
     public function getSort()
@@ -123,18 +120,6 @@ abstract class Block
     public function setPages($pages)
     {
         $this->pages = $pages;
-
-        return $this;
-    }
-
-    public function getOperators()
-    {
-        return $this->operators;
-    }
-
-    public function setOperators($operators)
-    {
-        $this->operators = $operators;
 
         return $this;
     }

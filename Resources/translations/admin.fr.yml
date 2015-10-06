@@ -153,6 +153,11 @@ msi_cms_block_admin:
     none: Aucun
     new: Nouveau
 
+msi_cms_site_admin:
+    entity: Site|Sites
+    none: Aucun
+    new: Nouveau
+
 th:
     published: Publié
     uniquename: Nom
@@ -167,3 +172,9 @@ label:
     parent: Parent
     link_attributes: Attributs
     template: Layout
+    brand: Brand
+    host: Host
+    title: Titre
+    route: Route
+    css: CSS
+    js: JS

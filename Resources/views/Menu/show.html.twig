@@ -12,8 +12,8 @@
             {% set url = menu.translation.route ?: '#' %}
         {% endif %}
     {% endif %}
-    <li>
-        <a{% if menu.targetBlank %} target="_blank"{% endif %} href="{{ url }}">
+    <li class="nav-item">
+        <a{% if menu.targetBlank %} target="_blank"{% endif %} href="{{ url }}" class="nav-link">
             {{ menu.translation.name }}
         </a>
     </li>

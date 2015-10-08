@@ -21,6 +21,10 @@ class MenuController extends Controller
         $qb->andWhere($qb->expr()->eq('a_parent.uniqueName', ':a_parent_uniqueName'));
         $qb->setParameter('a_parent_uniqueName', $request->attributes->get('menu'));
 
+        $qb->join('a.translations', 'a_translations');
+        $qb->andWhere($qb->expr()->eq('a_translations.published', ':a_translations_published'));
+        $qb->setParameter('a_translations_published', true);
+
         $menus = $qb->getQuery()->execute();
 
         if (!$menus) {

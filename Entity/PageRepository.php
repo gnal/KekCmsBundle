@@ -8,6 +8,11 @@ class PageRepository extends EntityRepository
 {
     public function findCmsPage($site, $slug = null, $locale, $route = null)
     {
+        // looks like this is a scenario, not sure how to reproduce it tho
+        if ($slug === null && $route === null) {
+            return;
+        }
+
         $qb = $this->createQueryBuilder('a');
 
         if ($site->getId()) {

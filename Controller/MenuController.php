@@ -25,6 +25,8 @@ class MenuController extends Controller
         $qb->andWhere($qb->expr()->eq('a_translations.published', ':a_translations_published'));
         $qb->setParameter('a_translations_published', true);
 
+        $qb->addOrderBy('a.lft', 'ASC');
+
         $menus = $qb->getQuery()->execute();
 
         if (!$menus) {

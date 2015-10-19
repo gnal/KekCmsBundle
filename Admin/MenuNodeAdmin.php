@@ -25,6 +25,7 @@ class MenuNodeAdmin extends Admin
         $config
             ->addOption('form_template', 'MsiCmsBundle:MenuNode:form.html.twig')
             ->addOption('search_fields', ['a.id', 'translations.name'])
+            ->addOption('grid_action_template', 'MsiCmsBundle:MenuNode:grid_action.html.twig')
         ;
     }
 

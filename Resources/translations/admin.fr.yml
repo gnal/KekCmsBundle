@@ -158,6 +158,11 @@ msi_cms_site_admin:
     none: Aucun
     new: Nouveau
 
+msi_cms_image_admin:
+    entity: Image|Images
+    none: Aucune
+    new: Nouvelle
+
 th:
     published: Publié
     uniquename: Nom
@@ -165,6 +170,8 @@ th:
     brand: Brand
     host: Host
     title: Titre
+    image: Image
+    imagename: Nom
 
 label:
     page: Page
@@ -181,3 +188,7 @@ label:
     route: Route
     css: CSS
     js: JS
+    image_file: Image
+    meta_description: Description
+    meta_title: Titre
+    unique_name: Nom

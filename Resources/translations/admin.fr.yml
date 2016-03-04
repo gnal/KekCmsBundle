@@ -172,6 +172,7 @@ th:
     title: Titre
     image: Image
     imagename: Nom
+    route: Route
 
 label:
     page: Page
@@ -180,7 +181,7 @@ label:
     published: Publié
     target_blank: Ouvrir dans un nouvel onglet
     parent: Parent
-    link_attributes: Attributs
+    link_attributes: Attributs HTML
     template: Layout
     brand: Brand
     host: Host
@@ -192,3 +193,6 @@ label:
     meta_description: Description
     meta_title: Titre
     unique_name: Nom
+    form_isdefault: Default
+    form_translations_0_published: Publié
+    form_targetblank: Ouvrir dans un nouvel onglet

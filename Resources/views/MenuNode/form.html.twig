@@ -1,8 +1,10 @@
 {% form_theme form 'MsiAdminBundle:Form:form.html.twig' %}
 
+{% trans_default_domain 'admin' %}
+
 <ul class="nav nav-tabs">
-    <li class="nav-item"><a class="nav-link active" href="#tab1" data-toggle="tab">Content</a></li>
-    {% if app.user.isSuperAdmin %}<li class="nav-item"><a class="nav-link" href="#admin" data-toggle="tab">Admin</a></li>{% endif %}
+    <li class="active"><a href="#tab1" data-toggle="tab">{{ 'tab.main'|trans }}</a></li>
+    <li><a href="#tab2" data-toggle="tab">{{ 'tab.advanced'|trans }}</a></li>
 </ul>
 
 <div class="tab-content">
@@ -11,25 +13,17 @@
             {{ form_row(translation.published) }}
             {{ form_row(translation.name) }}
         {% endfor %}
-        <div class="row">
-            <div class="col-md-6">
-                {{ form_row(form.page) }}
-            </div>
-            <div class="col-md-6">
-                {% for translation in form.translations %}
-                    {{ form_row(translation.route) }}
-                {% endfor %}
-            </div>
-        </div>
+        {{ form_row(form.page) }}
+        {% for translation in form.translations %}
+            {{ form_row(translation.route) }}
+        {% endfor %}
         {{ form_row(form.targetBlank) }}
         {{ form_row(form.parent) }}
     </div>
 
-    {% if app.user.isSuperAdmin %}
-        <div class="tab-pane" id="admin">
-            {{ form_row(form.linkAttributes) }}
-        </div>
-    {% endif %}
+    <div class="tab-pane" id="tab2">
+        {{ form_row(form.linkAttributes) }}
+    </div>
 </div>
 
 {{ form_rest(form) }}

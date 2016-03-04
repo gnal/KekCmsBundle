@@ -29,8 +29,8 @@ class MenuRootAdmin extends Admin
     public function buildGrid(Grid $builder)
     {
         $builder
-            ->add('published', 'boolean')
             ->add('uniqueName')
+            ->add('published', 'boolean')
         ;
     }
 
@@ -44,9 +44,8 @@ class MenuRootAdmin extends Admin
     public function buildTranslationForm(FormBuilder $builder)
     {
         $builder
-            ->add('published', 'checkbox', [
-                'label' => 'published',
-            ])
+            // why do we need to explicitly say checkbox here? mystery...
+            ->add('published', 'checkbox')
         ;
     }
 

@@ -3,6 +3,7 @@
 namespace Msi\CmsBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -25,6 +26,12 @@ abstract class Image
      * @Assert\NotBlank()
      */
     protected $name;
+
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(type="string")
+     */
+    protected $slug;
 
     /**
      * @ORM\Column(type="string")
@@ -57,9 +64,9 @@ abstract class Image
         return $this->image;
     }
 
-    public function setImage($image)
+    public function setSlug($slug)
     {
-        $this->image = $image;
+        $this->slug = $slug;
 
         return $this;
     }
@@ -98,6 +105,18 @@ abstract class Image
         $this->name = $name;
 
         return $this;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     public function __toString()

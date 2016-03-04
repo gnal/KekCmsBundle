@@ -1,9 +1,11 @@
 {% form_theme form 'MsiAdminBundle:Form:form.html.twig' %}
 
+{% trans_default_domain 'admin' %}
+
 <ul class="nav nav-tabs">
-    <li class="nav-item"><a class="nav-link active" href="#content2" data-toggle="tab">Content</a></li>
-    <li class="nav-item"><a class="nav-link" href="#seo" data-toggle="tab">SEO</a></li>
-    {% if app.user.isSuperAdmin %}<li class="nav-item"><a class="nav-link" href="#admin" data-toggle="tab">Admin</a></li>{% endif %}
+    <li class="active"><a href="#content2" data-toggle="tab">{{ 'tab.main'|trans }}</a></li>
+    <li><a href="#seo" data-toggle="tab">SEO</a></li>
+    <li><a href="#admin" data-toggle="tab">{{ 'tab.advanced'|trans }}</a></li>
 </ul>
 
 <div class="tab-content">
@@ -30,14 +32,13 @@
             {{ form_row(translation.metaTitle) }}
         {% endfor %}
     </div>
-    {% if app.user.isSuperAdmin %}
-        <div class="tab-pane" id="admin">
-            {{ form_row(form.route) }}
-            {{ form_row(form.parent) }}
-            {{ form_row(form.css) }}
-            {{ form_row(form.js) }}
-        </div>
-    {% endif %}
+
+    <div class="tab-pane" id="admin">
+        {{ form_row(form.route) }}
+        {{ form_row(form.parent) }}
+        {{ form_row(form.css) }}
+        {{ form_row(form.js) }}
+    </div>
 </div>
 
 {{ form_rest(form) }}

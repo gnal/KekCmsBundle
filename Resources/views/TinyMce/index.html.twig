@@ -1,0 +1,25 @@
+<script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+<script type="text/javascript">
+    tinymce.init({
+        selector: '.tinymce',
+        min_height: 300,
+        plugins: [
+            "image", "code"
+        ],
+        image_dimensions: false,
+        image_class_list: [
+            {title: 'None', value: ''},
+            {title: 'Responsive', value: 'img-responsive'}
+        ],
+        image_list: [
+            {% for image in images %}
+                {
+                    title: '{{ image.name }}',
+                    value: '{{ msi_admin_pathname(image, "image") }}'
+                },
+            {% endfor %}
+        ],
+        content_css: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
+        content_style: "body {padding: 15px}"
+    });
+</script>

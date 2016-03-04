@@ -24,7 +24,7 @@ class MenuNodeAdmin extends Admin
         $config->setParent($this->container->get('msi_cms_menu_root_admin'));
         $config
             ->addOption('form_template', 'MsiCmsBundle:MenuNode:form.html.twig')
-            ->addOption('search_fields', ['a.id', 'translations.name'])
+            ->addOption('search_fields', ['translations.name'])
             ->addOption('grid_action_template', 'MsiCmsBundle:MenuNode:grid_action.html.twig')
         ;
     }
@@ -32,8 +32,8 @@ class MenuNodeAdmin extends Admin
     public function buildGrid(Grid $builder)
     {
         $builder
-            ->add('published', 'boolean')
             ->add('name', 'tree')
+            ->add('published', 'boolean')
         ;
     }
 
@@ -60,9 +60,7 @@ class MenuNodeAdmin extends Admin
                 'choices' => $parentChoices,
                 'property' => 'toTree',
             ])
-            ->add('targetBlank', 'checkbox', [
-                'label' => 'target_blank',
-            ])
+            ->add('targetBlank', 'checkbox')
             ->add('linkAttributes')
         ;
     }
@@ -70,9 +68,7 @@ class MenuNodeAdmin extends Admin
     public function buildTranslationForm(FormBuilder $builder)
     {
         $builder
-            ->add('published', 'checkbox', [
-                'label' => 'published',
-            ])
+            ->add('published', 'checkbox')
             ->add('name', 'text', [
                 'constraints' => [new NotBlank],
             ])

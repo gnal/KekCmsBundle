@@ -15,21 +15,20 @@ class PageAdmin extends Admin
         $config->setDataClass($this->container->getParameter('msi_cms.page.class'));
         $config
             ->addOption('form_template', 'MsiCmsBundle:Page:form.html.twig')
-            ->addOption('search_fields', ['a.id', 'a.route', 'translations.title'])
+            ->addOption('search_fields', ['a.route', 'translations.title'])
         ;
     }
 
     public function buildGrid(Grid $builder)
     {
         $builder
+            ->add('title')
             ->add('published', 'boolean')
-            ->add('title', 'edit')
         ;
 
-        // if ($this->getUser()->isSuperAdmin()) {
-        //     $builder->add('slug');
-        //     $builder->add('route');
-        // }
+        if ($this->getUser()->isSuperAdmin()) {
+            $builder->add('route');
+        }
     }
 
     public function buildForm(FormBuilder $builder)
@@ -74,9 +73,7 @@ class PageAdmin extends Admin
     {
         $builder
             ->add('title')
-            ->add('published', 'checkbox', [
-                'label' => 'published',
-            ])
+            ->add('published', 'checkbox')
             ->add('body', 'textarea', [
                 'attr' => [
                     'class' => 'tinymce',
@@ -85,5 +82,10 @@ class PageAdmin extends Admin
             ->add('metaTitle')
             ->add('metaDescription', 'textarea')
         ;
+    }
+
+    public function configureCrudQueryBuilder(QueryBuilder $qb)
+    {
+        $qb->addOrderBy('translations.title', 'ASC');
     }
 }

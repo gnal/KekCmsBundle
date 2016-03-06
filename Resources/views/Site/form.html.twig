@@ -1,10 +1,11 @@
 {% form_theme form 'MsiAdminBundle:Form:form.html.twig' %}
 
+{% trans_default_domain 'admin' %}
+
 <ul class="nav nav-tabs ">
-    <li class="active"><a href="#tab1" data-toggle="tab">{{ 'General'|trans }}</a></li>
-    <li><a href="#tab2" data-toggle="tab">{{ 'Settings'|trans }}</a></li>
+    <li class="active"><a href="#tab1" data-toggle="tab">{{ 'tab.main'|trans }}</a></li>
     <li><a href="#tab3" data-toggle="tab">{{ 'SEO'|trans }}</a></li>
-    <li><a href="#tab4" data-toggle="tab">{{ 'Admin'|trans }}</a></li>
+    <li><a href="#tab4" data-toggle="tab">{{ 'tab.advanced'|trans }}</a></li>
 </ul>
 
 {{ form_errors(form) }}
@@ -16,13 +17,6 @@
         {{ form_row(form.host) }}
     </div>
 
-    <div class="tab-pane fade" id="tab2">
-        {{ form_row(form.isDefault) }}
-        {% if form.theme is defined %}
-        {{ form_row(form.theme) }}
-        {% endif %}
-    </div>
-
     <div class="tab-pane fade" id="tab3">
         {% for translation in form.translations %}
             {{ form_row(translation.metaDescription) }}
@@ -30,6 +24,10 @@
     </div>
 
     <div class="tab-pane fade" id="tab4">
+        {{ form_row(form.isDefault) }}
+        {% if form.theme is defined %}
+            {{ form_row(form.theme) }}
+        {% endif %}
         {{ form_row(form.css) }}
         {{ form_row(form.js) }}
     </div>

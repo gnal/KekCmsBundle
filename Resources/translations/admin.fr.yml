@@ -158,11 +158,6 @@ msi_cms_site_admin:
     none: Aucun
     new: Nouveau
 
-msi_cms_image_admin:
-    entity: Image|Images
-    none: Aucune
-    new: Nouvelle
-
 th:
     published: Publié
     uniquename: Nom

@@ -21,20 +21,8 @@ class Configuration implements ConfigurationInterface
         $this->addAdminSection($rootNode);
         $this->addConfigSection($rootNode);
         $this->addHelpSection($rootNode);
-        $this->addImageSection($rootNode);
 
         return $treeBuilder;
-    }
-
-    private function addImageSection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->children()
-                ->scalarNode('image_class')
-                    ->defaultValue('Msi\CmsBundle\Entity\Image')
-                    ->cannotBeEmpty()
-                ->end()
-            ->end();
     }
 
     private function addSiteSection(ArrayNodeDefinition $node)

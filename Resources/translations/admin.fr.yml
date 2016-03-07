@@ -166,7 +166,7 @@ th:
     host: Host
     title: Titre
     image: Image
-    imagename: Nom
+    imagename: Nom de fichier
     route: Route
 
 label:

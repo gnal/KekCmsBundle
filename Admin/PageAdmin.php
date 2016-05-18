@@ -83,9 +83,4 @@ class PageAdmin extends Admin
             ->add('metaDescription', 'textarea')
         ;
     }
-
-    public function configureCrudQueryBuilder(QueryBuilder $qb)
-    {
-        $qb->addOrderBy('translations.title', 'ASC');
-    }
 }
